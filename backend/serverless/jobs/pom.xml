@@ -4,18 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- <groupId>com.amazonaws.serverless.sample</groupId> -->
-    <groupId>personal.carlthronson.devilslake.backend.jobs</groupId>
+    <!-- <groupId>personal.carlthronson.devilslake.backend.jobs</groupId> -->
+    <groupId>personal.carlthronson.dl.be.jobs</groupId>
     <!-- <artifactId>serverless-spring-boot-example</artifactId> -->
     <artifactId>devils-lake-jobs</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <!--
+    <!-- -->
         <parent>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-parent</artifactId>
             <version>1.5.17.RELEASE</version>
         </parent>
-    -->
+    <!-- -->
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
