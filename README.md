@@ -16,3 +16,15 @@ When I log in to AWS, I use multi-factor authentication.
 How exactly do you do that from the command line??
 
 I think you probably need some sort of reusable token session....
+
+***** So, here's the solution *****
+  1. Open an incognito window and go to your start URL for AWS.  My URL looks something like this https://d-<???????>.awsapps.com/start
+  2. Go through the MFA sign on process
+  3. Click on your account
+  4. Click on "Command line or programmatic access"
+  5. I'm on a mac, so it might work different for you, but, what worked for me, was option 1.  Just copy those commands and execute from the terminal window
+
+So, now I can run sls deploy and it's up and running, just like that.
+
+Now.... how do I hit it??
+
