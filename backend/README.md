@@ -28,3 +28,9 @@ So, now I can run sls deploy and it's up and running, just like that.
 
 Now.... how do I hit it??
 
+**** so... ****
+when you run sls deploy it returns and endpoint url
+append pets to the end of the url
+
+https://<?magicnumber?>.execute-api.us-west-2.amazonaws.com/dev/pets
+
