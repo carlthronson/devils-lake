@@ -1,11 +1,11 @@
 [
 {
-"statusLabel":"New"
+"statusLabel":"To Do"
 },
 {
-"statusLabel":"In Progress"
+"statusLabel":"Open"
 },
 {
-"statusLabel":"Done"
+"statusLabel":"Closed"
 }
 ]
