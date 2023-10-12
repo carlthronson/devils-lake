@@ -30,14 +30,10 @@ public class CompanyController {
     }
 
     // TODO
-//    @RequestMapping(path = "/company/{companyId}", method = RequestMethod.GET)
-//    public Company listCompanies() {
-//        Company newCompany = new Company();
-//        newCompany.setId(UUID.randomUUID().toString());
-//        newCompany.setBreed(CompanyData.getRandomBreed());
-//        newCompany.setDateOfBirth(CompanyData.getRandomDoB());
-//        newCompany.setName(CompanyData.getRandomName());
-//        return newCompany;
-//    }
+    @RequestMapping(path = "/company/{companyId}", method = RequestMethod.GET)
+    public Company listCompanies() {
+        Company newCompany = new Company();
+        return newCompany;
+    }
 
 }
