@@ -3,7 +3,7 @@
 // import styled from 'styled-components';
 import TaskBoard from '../../components/TaskBoard';
 
-export default function Page({ tasks }) {
+export default function Page() {
   return <div>
     <h1>Tasks</h1>
     <div>
