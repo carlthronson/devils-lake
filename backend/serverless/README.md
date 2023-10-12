@@ -1,4 +1,4 @@
-# backend
+# serverless
 
 Step 1, Uses serverless to create simple CRUD endpoints on AWS
 Take a look at origin	https://github.com/serverless-guru/aws-serverless-java-container.git (fetch)
