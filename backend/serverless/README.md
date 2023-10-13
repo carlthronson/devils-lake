@@ -34,3 +34,11 @@ append pets to the end of the url
 
 https://<?magicnumber?>.execute-api.us-west-2.amazonaws.com/dev/pets
 
+
+Here's something I get stuck on...
+1. I want to have an enum to represent the valid states and substates
+2. A state/substate should also be a domain object
+3. It needs a constructuor for json deserialization
+4. Not sure exactly how to explain the problem
+5. Except that it doesn't work unless you do everything right :)
+
