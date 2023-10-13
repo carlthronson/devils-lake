@@ -35,7 +35,7 @@ export default function TaskColumn({ title, workflowState, id }) {
 
     useEffect(() => {
         console.log("useEffect");
-        const url = "/api/task/status/" + workflowState.statusLabel;
+        const url = "/api/task/status/" + workflowState.status;
         console.log("url: " + url);
         fetch(url)
             .then((response) => {
@@ -63,7 +63,7 @@ export default function TaskColumn({ title, workflowState, id }) {
                     position: 'stick',
                 }}
             >
-                {workflowState.statusLabel}
+                {workflowState.label}
             </Title>
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (

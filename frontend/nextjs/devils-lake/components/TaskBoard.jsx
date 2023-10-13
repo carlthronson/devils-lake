@@ -22,9 +22,13 @@ export default function TaskBoard() {
 
   useEffect(() => {
     console.log("useEffect");
-    fetch('./workflowStates.json')
-      .then((response) => response.json())
+    const url = "/api/state";
+    console.log("url: " + url);
+    fetch(url)
+  .then((response) => response.json())
       .then((json) => {
+        console.log("this is the json");
+        console.log(json);
         setWorkflowStates(json);
       });
   }, []);
@@ -35,7 +39,6 @@ export default function TaskBoard() {
         {/* This is where we will have columns for workflow states */}
       {workflowStates.map((item, index) => (
         <TaskColumn key={index} id={index} workflowState={item}></TaskColumn>
-        // <CompanyGroupColumn key={index} group={item} id={index}/>
       ))}
       </TaskArea>
     </DragDropContext>

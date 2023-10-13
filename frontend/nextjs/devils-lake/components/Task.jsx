@@ -1,6 +1,14 @@
 import { Draggable } from 'react-beautiful-dnd';
+import { useCollapse } from 'react-collapsed';
 import styled from 'styled-components';
 import { Avatar, Image } from 'antd';
+import React, { useState, useEffect } from 'react';
+
+const CompanyHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+`;
 
 const Container = styled.div`
     border-radius: 10px;
@@ -38,6 +46,31 @@ function bgcolorChange(props) {
 }
 
 export default function Task({ task, index }) {
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
+  const [subtasks, setSubtasks] = useState([]);
+
+  useEffect(() => {
+    console.log("useEffect");
+    const url = "/api/subtask/task/" + task.id;
+    console.log("url: " + url);
+    fetch(url)
+      .then((response) => {
+        const json = response.json();
+        console.log("json: " + json);
+        const body = response.body;
+        console.log("body: " + body);
+        return json;
+      })
+      .then((data) => {
+        console.log("start of the json that we read");
+        console.log(data.length);
+        console.log(data);
+        console.log("end of the json that we read");
+        // setCompanies(data.filter((company) => true));
+        setSubtasks(data);
+      });
+  }, []);
+
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
@@ -47,27 +80,30 @@ export default function Task({ task, index }) {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}>
-            <span>
-              <small>
-                #{task.id}
-                {'  '}
-              </small>
-            </span>
-          </div>
-          <div
-            style={{ display: 'flex', justifyContent: 'center', padding: 2 }}
-          >
-            <TextContent>{task.companyName}</TextContent>
-          </div>
-          <Icons>
-            <div>
-              <Avatar
-                onClick={() => console.log(task)}
-                src={'https://joesch.moe/api/v1/random?key=' + task.id}
-              />
-            </div>
-          </Icons>
+            <CompanyHeader {...getToggleProps()}>
+                {/* <div> */}
+                {/* <Button>{isExpanded ? '\u25B2' : '\u25BC'}</Button> */}
+                {/* <Button>{isExpanded ? '-' : '+'}</Button> */}
+                <small>{task.description}</small>
+                {/* </div> */}
+            </CompanyHeader>
+            <section {...getCollapseProps()}>
+                <div>
+                    {/* <TextContent>{company.size + ' employees'}</TextContent> */}
+                    {/* Number of jobs: {company.jobs.length} */}
+                </div>
+                {/* <button>{isExpanded ? 'Hide' : ('View' + company.jobs.length)}</button> */}
+                {/* <button>{isExpanded ? '\u25B2' : ('View' + company.jobs.length +  ' \u25BC')}</button> */}
+                {/* </CompanyHeader> */}
+                <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}></div>
+                <p></p>
+                <ol>
+                {subtasks.map((item, index) => (
+                  <li>{item.description}</li>
+                    // <Job key={index} job={item} index={index} />
+                ))}
+                </ol>
+            </section>
           {provided.placeholder}
         </Container>
       )}
