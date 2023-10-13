@@ -34,22 +34,22 @@ export default function TaskColumn({ title, workflowState, id }) {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        console.log("useEffect");
-        const url = "/api/task/status/" + workflowState.status;
-        console.log("url: " + url);
+        // console.log("useEffect");
+        const url = "/api/task/state/" + workflowState.name;
+        // console.log("url: " + url);
         fetch(url)
             .then((response) => {
                 const json = response.json();
-                console.log("json: " + json);
+                // console.log("json: " + json);
                 const body = response.body;
-                console.log("body: " + body);
+                // console.log("body: " + body);
                 return json;
             })
             .then((data) => {
-                console.log("start of the json that we read");
-                console.log(data.length);
-                console.log(data);
-                console.log("end of the json that we read");
+                // console.log("start of the json that we read");
+                // console.log(data.length);
+                // console.log(data);
+                // console.log("end of the json that we read");
                 // setCompanies(data.filter((company) => true));
                 setTasks(data);
             });

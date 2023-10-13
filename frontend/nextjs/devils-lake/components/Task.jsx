@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Avatar, Image } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Subtask from './Subtask';
 
 const CompanyHeader = styled.div`
     display: flex;
@@ -51,22 +52,22 @@ export default function Task({ task, index }) {
   const [subtasks, setSubtasks] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
-    const url = "/api/subtask/task/" + task.id;
-    console.log("url: " + url);
+    // console.log("useEffect");
+    const url = "/api/subtask/parent/" + task.id;
+    // console.log("url: " + url);
     fetch(url)
       .then((response) => {
         const json = response.json();
-        console.log("json: " + json);
+        // console.log("json: " + json);
         const body = response.body;
-        console.log("body: " + body);
+        // console.log("body: " + body);
         return json;
       })
       .then((data) => {
-        console.log("start of the json that we read");
-        console.log(data.length);
-        console.log(data);
-        console.log("end of the json that we read");
+        // console.log("start of the json that we read");
+        // console.log(data.length);
+        // console.log(data);
+        // console.log("end of the json that we read");
         // setCompanies(data.filter((company) => true));
         setSubtasks(data);
       });
@@ -85,7 +86,7 @@ export default function Task({ task, index }) {
                 {/* <div> */}
                 {/* <Button>{isExpanded ? '\u25B2' : '\u25BC'}</Button> */}
                 {/* <Button>{isExpanded ? '-' : '+'}</Button> */}
-                <small>{task.description}</small>
+                <small>{task.label}</small>
                 {/* </div> */}
             </CompanyHeader>
             <section {...getCollapseProps()}>
@@ -101,8 +102,8 @@ export default function Task({ task, index }) {
                 <ol>
                 {subtasks.map((item, index) => (
                   <li key={index}>
-                  <Link href={item.details}>{item.description}</Link>
-                    {/* <Job key={index} job={item} index={index} /> */}
+                  {/* <Link href={item.link}>{item.id}</Link> */}
+                    <Subtask key={index} subtask={item} index={index} />
                     </li>
                 ))}
                 </ol>

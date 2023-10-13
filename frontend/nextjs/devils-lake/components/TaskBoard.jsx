@@ -18,18 +18,18 @@ const handleDragEnd = (result) => {
 
 export default function TaskBoard() {
   { /* State */ }
-  const [workflowStates, setWorkflowStates] = useState([]);
+  const [states, setStates] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
+    // console.log("useEffect");
     const url = "/api/state";
-    console.log("url: " + url);
+    // console.log("url: " + url);
     fetch(url)
   .then((response) => response.json())
       .then((json) => {
-        console.log("this is the json");
-        console.log(json);
-        setWorkflowStates(json);
+        // console.log("this is the json");
+        // console.log(json);
+        setStates(json);
       });
   }, []);
 
@@ -37,8 +37,8 @@ export default function TaskBoard() {
     <DragDropContext onDragEnd={handleDragEnd}>
       <TaskArea>
         {/* This is where we will have columns for workflow states */}
-      {workflowStates.map((item, index) => (
-        <TaskColumn key={index} id={index} workflowState={item}></TaskColumn>
+      {states.map((state, index) => (
+        <TaskColumn key={index} id={index} workflowState={state}></TaskColumn>
       ))}
       </TaskArea>
     </DragDropContext>
