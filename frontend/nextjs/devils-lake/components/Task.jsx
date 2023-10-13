@@ -3,6 +3,7 @@ import { useCollapse } from 'react-collapsed';
 import styled from 'styled-components';
 import { Avatar, Image } from 'antd';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const CompanyHeader = styled.div`
     display: flex;
@@ -99,8 +100,10 @@ export default function Task({ task, index }) {
                 <p></p>
                 <ol>
                 {subtasks.map((item, index) => (
-                  <li>{item.description}</li>
-                    // <Job key={index} job={item} index={index} />
+                  <li>
+                  <Link href={item.details}>{item.description}</Link>
+                    {/* <Job key={index} job={item} index={index} /> */}
+                    </li>
                 ))}
                 </ol>
             </section>
