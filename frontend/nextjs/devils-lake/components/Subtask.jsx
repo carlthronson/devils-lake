@@ -130,7 +130,7 @@ export default function Subtask({ subtask, index }) {
     // console.log(`Option selected:`, selectedOption);
     // console.log(JSON.stringify(subtask));
     // console.log("POSTING DATA");
-    fetch('http://localhost:3000/api/subtask', {
+    fetch('/api/subtask', {
       method: "POST",
       body: JSON.stringify(subtask),
       headers: {
