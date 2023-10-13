@@ -100,7 +100,7 @@ export default function Task({ task, index }) {
                 <p></p>
                 <ol>
                 {subtasks.map((item, index) => (
-                  <li>
+                  <li key={index}>
                   <Link href={item.details}>{item.description}</Link>
                     {/* <Job key={index} job={item} index={index} /> */}
                     </li>
