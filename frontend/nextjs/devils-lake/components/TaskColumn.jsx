@@ -36,7 +36,7 @@ export default function TaskColumn({ title, workflowState, id }) {
     useEffect(() => {
         // console.log("useEffect");
         const url = "/api/task/state/" + workflowState.name;
-        // console.log("url: " + url);
+        console.log("url: " + url);
         fetch(url)
             .then((response) => {
                 const json = response.json();
