@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import personal.carlthronson.dl.be.story.Story;
+import personal.carlthronson.dl.be.story.StoryService;
+
 @RestController
 @EnableWebMvc
 @Transactional
@@ -26,7 +29,7 @@ public class TaskController {
     TaskService service;
 
     @Autowired
-    StatusService statusService;
+    StoryService storyService;
 
     @RequestMapping(path = "/task", method = RequestMethod.POST)
     public Task create(@RequestBody Task task) {
@@ -53,13 +56,13 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(path = "/task/list/{statusName}", method = RequestMethod.GET)
-    public List<Task> list(@PathVariable String statusName,
+    @RequestMapping(path = "/task/list/{storyId}", method = RequestMethod.GET)
+    public List<Task> list(@PathVariable Integer storyId,
             @RequestParam("limit") Optional<Integer> limit,
             Principal principal) {
         try {
-            Status status = statusService.findByName(statusName);
-            return service.list(status);
+            Story story = storyService.findById(storyId);
+            return service.list(story);
         } catch (Exception ex) {
             List<Task> list = new ArrayList<>();
             Task task = new Task();

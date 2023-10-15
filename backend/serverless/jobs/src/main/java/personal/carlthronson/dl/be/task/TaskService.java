@@ -8,6 +8,8 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import personal.carlthronson.dl.be.story.Story;
+
 @Service
 @Transactional
 public class TaskService {
@@ -23,9 +25,9 @@ public class TaskService {
         return repository.findAll();
     }
 
-    public List<Task> list(Status status) {
+    public List<Task> list(Story story) {
         Task task = new Task();
-        task.setStatus(status);
+        task.setStory(story);
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("status",
                 ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
         Example<Task> example = Example.of(task, matcher);
