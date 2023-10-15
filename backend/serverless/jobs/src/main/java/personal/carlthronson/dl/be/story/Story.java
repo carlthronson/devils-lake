@@ -2,6 +2,8 @@ package personal.carlthronson.dl.be.story;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +34,7 @@ public class Story {
 
     @Getter
     @Setter
-    public String phase;
-
+    @ManyToOne
+    @JoinColumn(name = "phase_id", nullable = false, unique = false)
+    private Phase phase;
 }

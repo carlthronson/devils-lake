@@ -23,9 +23,9 @@ public class StoryService {
         return repository.findAll();
     }
 
-    public List<Story> list(String phase) {
+    public List<Story> list(Phase phase) {
         Story story = new Story();
-        story.phase = phase;
+        story.setPhase(phase);
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("phase",
                 ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
         Example<Story> example = Example.of(story, matcher);
