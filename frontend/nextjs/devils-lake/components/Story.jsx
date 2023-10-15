@@ -49,21 +49,21 @@ function bgcolorChange(props) {
 
 export default function Story({ story, statuses, index }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
-  const [tasks, setTasks] = useState([]);
+  // const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const url = "/api/task/story/" + story.id;
-    console.log(url);
-    fetch(url)
-      .then((response) => {
-        const json = response.json();
-        const body = response.body;
-        return json;
-      })
-      .then((data) => {
-        setTasks(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const url = "/api/task/story/" + story.id;
+  //   console.log(url);
+  //   fetch(url)
+  //     .then((response) => {
+  //       const json = response.json();
+  //       const body = response.body;
+  //       return json;
+  //     })
+  //     .then((data) => {
+  //       setTasks(data);
+  //     });
+  // }, []);
 
   return (
     <Draggable draggableId={`${story.id}`} key={story.id} index={index}>
@@ -92,7 +92,7 @@ export default function Story({ story, statuses, index }) {
                 <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}></div>
                 <p></p>
                 <ol>
-                {tasks.map((item, index) => (
+                {story.tasks.map((item, index) => (
                   <li key={index}>
                   {/* <Link href={item.link}>{item.id}</Link> */}
                     <Task key={index} task={item} statuses={statuses} index={index} />
