@@ -7,7 +7,6 @@ import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.story.Story;
 
 @Entity(name = "task")
 public class Task {
@@ -38,10 +37,4 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false, unique = false)
     private Status status;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @JoinColumn(name = "story_id", nullable = false, unique = false)
-    private Story story;
 }
