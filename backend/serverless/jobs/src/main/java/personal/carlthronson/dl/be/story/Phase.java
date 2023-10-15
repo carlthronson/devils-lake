@@ -1,7 +1,6 @@
 package personal.carlthronson.dl.be.story;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.Getter;

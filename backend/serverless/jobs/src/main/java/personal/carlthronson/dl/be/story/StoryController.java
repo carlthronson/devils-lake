@@ -25,6 +25,9 @@ public class StoryController {
     @Autowired
     StoryService service;
 
+    @Autowired
+    PhaseService phaseService;
+
     @RequestMapping(path = "/story", method = RequestMethod.POST)
     public Story create(@RequestBody Story story) {
         return service.create(story);
@@ -50,11 +53,12 @@ public class StoryController {
         }
     }
 
-    @RequestMapping(path = "/story/list/{phase}", method = RequestMethod.GET)
-    public List<Story> list(@PathVariable String phase,
+    @RequestMapping(path = "/story/list/{phaseName}", method = RequestMethod.GET)
+    public List<Story> list(@PathVariable String phaseName,
             @RequestParam("limit") Optional<Integer> limit,
             Principal principal) {
         try {
+            Phase phase = phaseService.findByName(phaseName);
             return service.list(phase);
         } catch (Exception ex) {
             List<Story> list = new ArrayList<>();
