@@ -6,9 +6,27 @@ provider:
   memorySize: 1512
   timeout: 60
   stage: ${opt:stage,'dev'}
-  region: ${opt:region, 'us-west-2'}
+  region: ${opt:region, 'us-west-1'}
   profile: ${opt:profile, "default"}
   endpointType: REGIONAL
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: "ec2:DescribeNetworkInterfaces"
+          Resource: "*"
+        - Effect: "Allow"
+          Action: "ec2:CreateNetworkInterface"
+          Resource: "*"
+        - Effect: "Allow"
+          Action: "ec2:DeleteNetworkInterface"
+          Resource: "*"
+        - Effect: "Allow"
+          Action: "ec2:DescribeInstances"
+          Resource: "*"
+        - Effect: "Allow"
+          Action: "ec2:AttachNetworkInterface"
+          Resource: "*"
 
 resources:
   Description: Jobs API
@@ -28,3 +46,4 @@ functions:
 
 plugins:
    - serverless-better-credentials
+   - serverless-offline
