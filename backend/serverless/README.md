@@ -1,5 +1,16 @@
 # serverless
 
+HUGE ISSUE
+1. How can the aws lambda (deployed by serverless) connect to an AWS database.
+2. I finally figured it out.  Took me a couple of hours.
+3. It all comes down to 2 things
+4. Thing one - configure serverless.yml to allow certain actions.
+5. Thing two - configure the lambda function to use the right vpc, sq, etc...
+6. How did I figure out these details
+7. Thing one - I found a stackoverflow post
+8. Thing two - I found a blog post showing a lot of details
+9. And along the way, I needed to create an EC2 instance with DB access to follow the tutorials
+
 Step 1, Uses serverless to create simple CRUD endpoints on AWS
 Take a look at origin	https://github.com/serverless-guru/aws-serverless-java-container.git (fetch)
 And https://github.com/serverless-guru/aws-serverless-java-container/blob/master/samples/springboot/pet-store/README.md
