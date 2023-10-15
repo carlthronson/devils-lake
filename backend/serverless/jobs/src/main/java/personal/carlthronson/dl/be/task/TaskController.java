@@ -25,6 +25,9 @@ public class TaskController {
     @Autowired
     TaskService service;
 
+    @Autowired
+    StatusService statusService;
+
     @RequestMapping(path = "/task", method = RequestMethod.POST)
     public Task create(@RequestBody Task task) {
         return service.create(task);
@@ -50,11 +53,12 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(path = "/task/list/{status}", method = RequestMethod.GET)
-    public List<Task> list(@PathVariable String status,
+    @RequestMapping(path = "/task/list/{statusName}", method = RequestMethod.GET)
+    public List<Task> list(@PathVariable String statusName,
             @RequestParam("limit") Optional<Integer> limit,
             Principal principal) {
         try {
+            Status status = statusService.findByName(statusName);
             return service.list(status);
         } catch (Exception ex) {
             List<Task> list = new ArrayList<>();
