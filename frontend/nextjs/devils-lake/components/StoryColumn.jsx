@@ -32,7 +32,7 @@ export default function StoryColumn({ statuses, phase, id }) {
     const [stories, setStories] = useState([]);
 
     useEffect(() => {
-        const url = "/api/story/list/" + phase.name;
+        const url = "/api/story/phase/" + phase.name;
         console.log("url: " + url);
         fetch(url)
             .then((response) => {

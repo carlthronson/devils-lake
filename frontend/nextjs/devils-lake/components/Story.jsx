@@ -52,7 +52,7 @@ export default function Story({ story, statuses, index }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const url = "/api/task/list/" + story.id;
+    const url = "/api/task/story/" + story.id;
     console.log(url);
     fetch(url)
       .then((response) => {
