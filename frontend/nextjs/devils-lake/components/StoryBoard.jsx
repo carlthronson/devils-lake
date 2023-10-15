@@ -33,6 +33,7 @@ export default function StoryBoard() {
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
+        json.sort((a, b) => ((a.id > b.id) ? 1 : -1));
         setPhases(json);
       });
   }, []);
