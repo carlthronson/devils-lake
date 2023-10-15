@@ -31,4 +31,13 @@ public class StoryService {
         Example<Story> example = Example.of(story, matcher);
         return repository.findAll(example);
     }
+
+    public Story findById(Integer storyId) {
+        Story story = new Story();
+        story.setId(storyId);
+        ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
+                ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+        Example<Story> example = Example.of(story, matcher);
+        return repository.findOne(example);
+    }
 }
