@@ -2,6 +2,8 @@ package personal.carlthronson.dl.be.task;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,5 +34,7 @@ public class Task {
 
     @Getter
     @Setter
-    public String status;
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false, unique = false)
+    private Status status;
 }

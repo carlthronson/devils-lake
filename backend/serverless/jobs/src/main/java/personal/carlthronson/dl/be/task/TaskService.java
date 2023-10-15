@@ -23,9 +23,9 @@ public class TaskService {
         return repository.findAll();
     }
 
-    public List<Task> list(String status) {
+    public List<Task> list(Status status) {
         Task task = new Task();
-        task.status = status;
+        task.setStatus(status);
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("status",
                 ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
         Example<Task> example = Example.of(task, matcher);
