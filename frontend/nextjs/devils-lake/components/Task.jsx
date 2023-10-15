@@ -108,60 +108,10 @@ function bgcolorChange(props) {
 
 export default function Task({ task, statuses, index }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
-  // const [selected, setSelected] = useState(job.status);
-
-  // const [statuses, setStatuses] = useState([]);
-
-  // useEffect(() => {
-  // const url = "/api/status";
-  // fetch(url)
-  //   .then((response) => response.json())
-  //   .then((json) => {
-  //     setStatuses(json);
-  //     console.log("Use this status as the default: " + JSON.stringify(task.status));
-  //     console.log("These are the valid statuses: " + JSON.stringify(json));
-  //     const options = json.map((item, index) => {
-  //       const option = { value: item.name, label: item.label };
-  //       return option;
-  //     });
-  // console.log(JSON.stringify(options));
-  // const defaultOption = options.filter(obj => {
-  //   console.log("obj is " + JSON.stringify(obj));
-  //   const result = obj.value == task.status.name;
-  //   console.log("result is " + result);
-  //   return result;
-  // })[0];
-  // console.log("Default option: " + JSON.stringify(defaultOption));
-  // const smth = [defaultOption];
-  // console.log("Smth: " + JSON.stringify(smth));
-  // setDefaultStatus(smth);
-  // console.log("Default status option: " + JSON.stringify(defaultStatus));
-  // mything = defaultOption;
-  //     });
-
-  // }, []);
-
-  const smth = () => {
-    console.log("******** HERE **********");
-    console.log("Available statuses: " + JSON.stringify(statuses));
-    console.log("Task status: " + JSON.stringify(task.status));
-    // convert statuses to select options
-    const options = statuses.map(obj =>{
-      return {index: obj.id - 1, value: obj.name, label: obj.label};
-    });
-    // filter to find the initial selected option
-    return options.filter(obj => {
-      console.log("obj is " + JSON.stringify(obj));
-      const result = obj.value == task.status.name;
-      console.log("result is " + result);
-      return result;
-    })[0];
-  }
 
   const handleChange = (selectedOption) => {
     console.log('selected choice: ' + JSON.stringify(selectedOption));
     task.status.id = selectedOption.index + 1;
-    // task.statusLabel = selectedOption.label;
     fetch('/api/task', {
       method: "POST",
       body: JSON.stringify(task),
@@ -212,7 +162,7 @@ export default function Task({ task, statuses, index }) {
             <Select
               className="basic-single"
               classNamePrefix="select"
-              defaultValue={smth}
+              defaultValue={{value: task.status.name, label: task.status.label}}
               isDisabled={false}
               isLoading={false}
               isClearable={false}
