@@ -106,12 +106,13 @@ function bgcolorChange(props) {
 //   { value: 'closed', label: 'Closed' },
 // ]
 
-export default function Task({ task, statuses, index }) {
+export default function Task({ task, story, statuses, index }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
 
   const handleChange = (selectedOption) => {
     console.log('selected choice: ' + JSON.stringify(selectedOption));
     task.status.id = selectedOption.index + 1;
+    task['story'] = { id: story.id };
     fetch('/api/task', {
       method: "POST",
       body: JSON.stringify(task),

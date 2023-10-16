@@ -95,7 +95,7 @@ export default function Story({ story, statuses, index }) {
                 {story.tasks.map((item, index) => (
                   <li key={index}>
                   {/* <Link href={item.link}>{item.id}</Link> */}
-                    <Task key={index} task={item} statuses={statuses} index={index} />
+                    <Task key={index} task={item} story={story} statuses={statuses} index={index} />
                     </li>
                 ))}
                 </ol>
