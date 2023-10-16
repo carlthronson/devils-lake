@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 import personal.carlthronson.dl.be.task.Task;
@@ -48,5 +50,6 @@ public class Story {
     @Setter
     @OneToMany
     @JoinColumn(name = "story_id", nullable = true, unique = false)
+    @JsonManagedReference
     private List<Task> tasks;
 }
