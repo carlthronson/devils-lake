@@ -49,21 +49,6 @@ function bgcolorChange(props) {
 
 export default function Story({ story, statuses, index }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
-  // const [tasks, setTasks] = useState([]);
-
-  // useEffect(() => {
-  //   const url = "/api/task/story/" + story.id;
-  //   console.log(url);
-  //   fetch(url)
-  //     .then((response) => {
-  //       const json = response.json();
-  //       const body = response.body;
-  //       return json;
-  //     })
-  //     .then((data) => {
-  //       setTasks(data);
-  //     });
-  // }, []);
 
   return (
     <Draggable draggableId={`${story.id}`} key={story.id} index={index}>
