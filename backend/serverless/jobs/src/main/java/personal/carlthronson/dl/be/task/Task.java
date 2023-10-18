@@ -6,11 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.Setter;
+import personal.carlthronson.dl.be.job.Job;
 import personal.carlthronson.dl.be.story.Story;
 
 @Entity(name = "task")
@@ -49,4 +51,10 @@ public class Task {
     @JoinColumn(name = "story_id", nullable = true, unique = false)
     @JsonBackReference
     private Story story;
+
+    @Getter
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "job_id", nullable = true, unique = false)
+    private Job job;
 }
