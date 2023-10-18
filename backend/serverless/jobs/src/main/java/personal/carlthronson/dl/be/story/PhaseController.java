@@ -39,7 +39,11 @@ public class PhaseController {
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
                 ExampleMatcher.GenericPropertyMatchers.exact());
         Example<Phase> example = Example.of(phase, matcher);
-        return repository.findOne(example);
+        Optional<Phase> optional = repository.findOne(example);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return new Phase();
     }
 
     @RequestMapping(path = "/phase", method = RequestMethod.GET)

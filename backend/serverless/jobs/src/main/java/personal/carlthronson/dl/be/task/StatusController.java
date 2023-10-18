@@ -39,7 +39,11 @@ public class StatusController {
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
                 ExampleMatcher.GenericPropertyMatchers.exact());
         Example<Status> example = Example.of(status, matcher);
-        return repository.findOne(example);
+        Optional<Status> optional = repository.findOne(example);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return new Status();
     }
 
     @RequestMapping(path = "/status", method = RequestMethod.GET)

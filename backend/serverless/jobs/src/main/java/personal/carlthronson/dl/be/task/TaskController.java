@@ -39,7 +39,11 @@ public class TaskController {
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("id",
                 ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
         Example<Task> example = Example.of(task, matcher);
-        return repository.findOne(example);
+        Optional<Task> optional = repository.findOne(example);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return new Task();
     }
 
     @RequestMapping(path = "/task", method = RequestMethod.GET)
