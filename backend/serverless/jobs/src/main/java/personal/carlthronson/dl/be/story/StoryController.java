@@ -29,6 +29,17 @@ public class StoryController {
 
     @RequestMapping(path = "/story", method = RequestMethod.POST)
     public Story save(@RequestBody Story story) {
+        if (story.getId() == 0) {
+            Story probe = new Story();
+            probe.setName(story.getName());
+            ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
+                    ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+            Example<Story> example = Example.of(probe, matcher);
+            Optional<Story> optional = repository.findOne(example);
+            if (optional.isPresent()) {
+                return optional.get();
+            }
+        }
         return repository.save(story);
     }
 
@@ -39,7 +50,11 @@ public class StoryController {
         ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("id",
                 ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
         Example<Story> example = Example.of(story, matcher);
-        return repository.findOne(example);
+        Optional<Story> optional = repository.findOne(example);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return new Story();
     }
 
     @RequestMapping(path = "/story", method = RequestMethod.GET)
