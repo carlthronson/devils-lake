@@ -11,6 +11,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,32 +61,27 @@ public class StoryController {
     }
 
     @RequestMapping(path = "/story", method = RequestMethod.GET)
-    public List<Story> findAll(@RequestParam("limit") Optional<Integer> limit, Principal principal) {
-        try {
-            return repository.findAll();
-        } catch (Exception ex) {
-            List<Story> list = new ArrayList<>();
-            Story story = new Story();
-            story.setName("exception");
-            OutputStream out = new ByteArrayOutputStream();
-            PrintWriter writer = new PrintWriter(out);
-            for (StackTraceElement element : ex.getStackTrace()) {
-                writer.println(element.toString());
-            }
-            writer.flush();
-            story.setLabel(out.toString());
-            list.add(story);
-            return list;
-        }
+    public Page<Story> findAll(
+        @RequestParam("pageNumber") Optional<Integer> pageNumberOption,
+        @RequestParam("pageSize") Optional<Integer> pageSizeOption,
+        Principal principal) {
+        int pageNumber = pageNumberOption.isPresent() ? pageNumberOption.get() : 1;
+        int pageSize = pageSizeOption.isPresent() ? pageSizeOption.get() : 10;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return repository.findAll(pageable);
     }
 
     // TODO better query
     @RequestMapping(path = "/story/phase/{phaseName}", method = RequestMethod.GET)
     public List<Story> findByExample(@PathVariable String phaseName,
-            @RequestParam("limit") Optional<Integer> limit,
+            @RequestParam("pageNumber") Optional<Integer> pageNumberOption,
+            @RequestParam("pageSize") Optional<Integer> pageSizeOption,
             Principal principal) {
         try {
-            List<Story> list = repository.findAll();
+            int pageNumber = pageNumberOption.isPresent() ? pageNumberOption.get() : 1;
+            int pageSize = pageSizeOption.isPresent() ? pageSizeOption.get() : 10;
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            List<Story> list = repository.findAll(pageable).getContent();
             List<Story> result = new ArrayList<>();
             for (Story story: list) {
                 if (story.getPhase().getName().compareTo(phaseName) == 0) {
