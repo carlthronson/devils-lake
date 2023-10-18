@@ -1,75 +1,17 @@
 package personal.carlthronson.dl.be;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.HandlerAdapter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-
 
 @SpringBootApplication
-@Configuration
-@EnableAutoConfiguration
-//@ComponentScan({"com.example", "com.controller", "com.repositories", "com.service", "com.model"})
-@EntityScan(basePackages = {"personal.carlthronson.dl.be"})
-@EnableJpaRepositories(basePackages = {"personal.carlthronson.dl.be"})
-//@EnableTransactionManagement
-public class Application extends SpringBootServletInitializer {
+public class Application {
 
-    // silence console logging
-    @Value("${logging.level.root:OFF}")
-    String message = "";
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
-    /*
-     * Create required HandlerMapping, to avoid several default HandlerMapping instances being created
-     */
-    @Bean
-    public HandlerMapping handlerMapping() {
-        return new RequestMappingHandlerMapping();
-    }
-
-    /*
-     * Create required HandlerAdapter, to avoid several default HandlerAdapter instances being created
-     */
-    @Bean
-    public HandlerAdapter handlerAdapter() {
-        return new RequestMappingHandlerAdapter();
-    }
-
-    /*
-     * optimization - avoids creating default exception resolvers; not required as the serverless container handles
-     * all exceptions
-     *
-     * By default, an ExceptionHandlerExceptionResolver is created which creates many dependent object, including
-     * an expensive ObjectMapper instance.
-     *
-     * To enable custom @ControllerAdvice classes remove this bean.
-     */
-    @Bean
-    public HandlerExceptionResolver handlerExceptionResolver() {
-        return new HandlerExceptionResolver() {
-
-            @Override
-            public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-                return null;
-            }
-        };
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+//	public void foo() {
+//	    jakarta.servlet.ServletException ex = new jakarta.servlet.ServletException();
+//	    ex.printStackTrace();
+//	}
 }

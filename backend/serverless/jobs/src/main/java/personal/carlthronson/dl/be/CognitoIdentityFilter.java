@@ -1,20 +1,20 @@
 package personal.carlthronson.dl.be;
 
 
-import com.amazonaws.serverless.proxy.RequestReader;
-import com.amazonaws.serverless.proxy.model.AwsProxyRequestContext;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import com.amazonaws.serverless.proxy.RequestReader;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequestContext;
 
-import java.io.IOException;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 
 /**
