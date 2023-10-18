@@ -76,14 +76,12 @@ export default function Story({ story, statuses, index }) {
                 {/* </CompanyHeader> */}
                 <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}></div>
                 <p></p>
-                <ol>
                 {story.tasks.map((item, index) => (
-                  <li key={index}>
+                  <div key={index}>
                   {/* <Link href={item.link}>{item.id}</Link> */}
                     <Task key={index} task={item} story={story} statuses={statuses} index={index} />
-                    </li>
+                    </div>
                 ))}
-                </ol>
             </section>
           {provided.placeholder}
         </Container>
