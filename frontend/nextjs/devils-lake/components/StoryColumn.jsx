@@ -32,7 +32,7 @@ export default function StoryColumn({ statuses, phase, id }) {
     const [stories, setStories] = useState([]);
 
     useEffect(() => {
-        const url = "/api/story/phase/" + phase.name;
+        const url = "/api/story/phase/" + phase.name + "/?pageNumber=1&pageSize=3";
         console.log("url: " + url);
         fetch(url)
             .then((response) => {
@@ -53,7 +53,7 @@ export default function StoryColumn({ statuses, phase, id }) {
                     position: 'stick',
                 }}
             >
-                {phase.label}
+                {phase.label + ' - ' + stories.length}
             </Title>
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
