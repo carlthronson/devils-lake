@@ -2,7 +2,7 @@ package personal.carlthronson.dl.be;
 
 import javax.sql.DataSource;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +18,7 @@ public class DataSourceConfig {
         Object database = "devils_lake";
         String format = "jdbc:postgresql://%s:%s/%s";
         String url = String.format(format, host, port, database);
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
         dataSourceBuilder.url(url);
         dataSourceBuilder.username(user);
