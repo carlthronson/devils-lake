@@ -8,4 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface PhaseRepository extends JpaRepository<Phase, Long> {
 
+    Phase getByName(String name);
+
 }

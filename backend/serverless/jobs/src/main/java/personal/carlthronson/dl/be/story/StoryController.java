@@ -1,16 +1,10 @@
 package personal.carlthronson.dl.be.story;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,81 +21,40 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Transactional
 public class StoryController {
+
     @Autowired
-    StoryRepository repository;
+    StoryService service;
 
     @RequestMapping(path = "/story", method = RequestMethod.POST)
     public Story save(@RequestBody Story story) {
-        if (story.getId() == 0) {
-            Story probe = new Story();
-            probe.setName(story.getName());
-            ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
-                    ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-            Example<Story> example = Example.of(probe, matcher);
-            Optional<Story> optional = repository.findOne(example);
-            if (optional.isPresent()) {
-                return optional.get();
-            }
-        }
-        return repository.save(story);
+        return service.save(story);
     }
 
     @RequestMapping(path = "/story/{id}", method = RequestMethod.GET)
-    public Story findOne(@PathVariable Integer id) {
-        Story story = new Story();
-        story.setId(id);
-        ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("id",
-                ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-        Example<Story> example = Example.of(story, matcher);
-        Optional<Story> optional = repository.findOne(example);
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        return new Story();
+    public Story getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
     @RequestMapping(path = "/story", method = RequestMethod.GET)
-    public Page<Story> findAll(
-        @RequestParam("pageNumber") Optional<Integer> pageNumberOption,
-        @RequestParam("pageSize") Optional<Integer> pageSizeOption,
-        Principal principal) {
-        int pageNumber = pageNumberOption.isPresent() ? pageNumberOption.get() : 1;
-        int pageSize = pageSizeOption.isPresent() ? pageSizeOption.get() : 10;
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return repository.findAll(pageable);
+    public Page<Story> findAll(@RequestParam("pageNumber") Optional<Integer> pageNumber,
+            @RequestParam("pageSize") Optional<Integer> pageSize, Principal principal) {
+
+        Pageable pageable = PageRequest.of(pageNumber.isPresent() ? pageNumber.get() : 1,
+                pageSize.isPresent() ? pageSize.get() : 10);
+
+        return service.findAll(pageable);
     }
 
-    // TODO better query
     @RequestMapping(path = "/story/phase/{phaseName}", method = RequestMethod.GET)
-    public List<Story> findByExample(@PathVariable String phaseName,
-            @RequestParam("pageNumber") Optional<Integer> pageNumberOption,
-            @RequestParam("pageSize") Optional<Integer> pageSizeOption,
-            Principal principal) {
-        try {
-            int pageNumber = pageNumberOption.isPresent() ? pageNumberOption.get() : 1;
-            int pageSize = pageSizeOption.isPresent() ? pageSizeOption.get() : 10;
-            Pageable pageable = PageRequest.of(pageNumber, pageSize);
-            List<Story> list = repository.findAll(pageable).getContent();
-            List<Story> result = new ArrayList<>();
-            for (Story story: list) {
-                if (story.getPhase().getName().compareTo(phaseName) == 0) {
-                    result.add(story);
-                }
-            }
-            return result;
-        } catch (Exception ex) {
-            List<Story> list = new ArrayList<>();
-            Story story = new Story();
-            story.setName("exception");
-            OutputStream out = new ByteArrayOutputStream();
-            PrintWriter writer = new PrintWriter(out);
-            for (StackTraceElement element : ex.getStackTrace()) {
-                writer.println(element.toString());
-            }
-            writer.flush();
-            story.setLabel(out.toString());
-            list.add(story);
-            return list;
-        }
+    public List<Story> findByPhase(@PathVariable("phaseName") String phaseName,
+            @RequestParam("pageNumber") Optional<Integer> pageNumber,
+            @RequestParam("pageSize") Optional<Integer> pageSize, Principal principal) {
+
+        System.out.println("Entering story controller endpoint /story/phase/{phaseName}");
+
+        Pageable pageable = PageRequest.of(pageNumber.isPresent() ? pageNumber.get() : 1,
+                pageSize.isPresent() ? pageSize.get() : 10);
+
+        return service.findByPhase(phaseName, pageable);
     }
 }
