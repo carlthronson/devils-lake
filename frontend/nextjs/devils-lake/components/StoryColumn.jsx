@@ -6,7 +6,7 @@ import Story from './Story';
 const Container = styled.div`
     background-color: #f4f5f7;
     border-radius: 2.5px;
-    width: 300px;
+    width: 500px;
     height: 475px;
     overflow-y: scroll;
     -ms-overflow-style: none;
@@ -30,9 +30,10 @@ const StoryList = styled.div`
 
 export default function StoryColumn({ statuses, phase, id }) {
     const [stories, setStories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const url = "/api/story/phase/" + phase.name + "/?pageNumber=1&pageSize=3";
+        const url = "/api/story/phase/" + phase.name + "/?pageNumber=1&pageSize=1000";
         console.log("url: " + url);
         fetch(url)
             .then((response) => {
@@ -42,6 +43,7 @@ export default function StoryColumn({ statuses, phase, id }) {
             })
             .then((data) => {
                 setStories(data);
+                setIsLoading(false);
             });
     }, []);
 
@@ -62,7 +64,7 @@ export default function StoryColumn({ statuses, phase, id }) {
                         {...provided.droppableProps}
                         isdraggingover={snapshot.isDraggingOver}
                     >
-                        {stories.map((item, index) => (
+                        {isLoading ? 'Please wait' : stories.map((item, index) => (
                             <Story key={index} index={index} statuses={statuses} story={item} />
                             ))}
                         {provided.placeholder}
