@@ -41,25 +41,15 @@ export default function Story({ story, statuses, index }) {
   return (
     <Container>
       <CompanyHeader {...getToggleProps()}>
-        {/* <div> */}
-        {/* <Button>{isExpanded ? '\u25B2' : '\u25BC'}</Button> */}
-        {/* <Button>{isExpanded ? '-' : '+'}</Button> */}
         <small>{story.label}</small>
-        {/* </div> */}
       </CompanyHeader>
       <section {...getCollapseProps()}>
         <div>
-          {/* <TextContent>{company.size + ' employees'}</TextContent> */}
-          {/* Number of jobs: {company.jobs.length} */}
         </div>
-        {/* <button>{isExpanded ? 'Hide' : ('View' + company.jobs.length)}</button> */}
-        {/* <button>{isExpanded ? '\u25B2' : ('View' + company.jobs.length +  ' \u25BC')}</button> */}
-        {/* </CompanyHeader> */}
         <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}></div>
         <p></p>
         {story.tasks.map((item, index) => (
           <div key={index}>
-            {/* <Link href={item.link}>{item.id}</Link> */}
             <Task key={index} task={item} story={story} statuses={statuses} index={index} />
           </div>
         ))}
