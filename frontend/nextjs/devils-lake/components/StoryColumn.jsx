@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Story from './Story';
 
-const Container = styled.div`
+const PhaseArea = styled.div`
     background-color: #f4f5f7;
     border-radius: 2.5px;
     height: 475px;
@@ -13,13 +13,14 @@ const Container = styled.div`
     flex: 1;
 `   ;
 
-const Title = styled.h3`
+const PhaseName = styled.h3`
     padding: 8px;
-    background-color: pink;
+    background-color: lightblue;
     text-align: center;
+    position: 'stick',
 `   ;
 
-const StoryList = styled.div`
+const StoryListArea = styled.div`
     padding: 3px;
   transistion: background-color 0.2s ease;
   background-color: #f4f5f7;
@@ -47,20 +48,15 @@ export default function StoryColumn({ statuses, phase, id }) {
     }, []);
 
     return (
-        <Container className='column'>
-            <Title
-                style={{
-                    backgroundColor: 'lightblue',
-                    position: 'stick',
-                }}
-            >
+        <PhaseArea>
+            <PhaseName>
                 {phase.label + ' - ' + stories.length}
-            </Title>
-            <StoryList>
+            </PhaseName>
+            <StoryListArea>
                 {isLoading ? 'Please wait' : stories.map((item, index) => (
                     <Story key={index} index={index} statuses={statuses} story={item} />
                 ))}
-            </StoryList>
-        </Container>
+            </StoryListArea>
+        </PhaseArea>
     );
 }
