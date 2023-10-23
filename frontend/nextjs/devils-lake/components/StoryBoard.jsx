@@ -46,7 +46,8 @@ export default function StoryBoard() {
       <StoryArea>
         {/* This is where we will have columns for workflow states */}
         {isLoading ? 'Loading...' : phases.map((phase, index) => (
-          <StoryColumn key={index} id={index} statuses={statuses} phase={phase}></StoryColumn>
+          phase.name == 'done' ? null :
+            <StoryColumn key={index} id={index} statuses={statuses} phase={phase}></StoryColumn>
         ))}
       </StoryArea>
     </DragDropContext>
