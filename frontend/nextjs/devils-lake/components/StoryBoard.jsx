@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import StoryColumn from './StoryColumn.jsx';
+import PhaseColumn from './PhaseColumn.jsx';
 
 const StoryArea = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ export default function StoryBoard() {
       {/* This is where we will have columns for workflow states */}
       {isLoading ? 'Loading...' : phases.map((phase, index) => (
         phase.name == 'done' ? null :
-          <StoryColumn key={index} id={index} statuses={statuses} phase={phase}></StoryColumn>
+          <PhaseColumn key={index} id={index} statuses={statuses} phase={phase}></PhaseColumn>
       ))}
     </StoryArea>
   );

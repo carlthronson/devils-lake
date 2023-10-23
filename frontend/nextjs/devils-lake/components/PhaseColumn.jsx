@@ -28,7 +28,7 @@ const StoryListArea = styled.div`
     min-height: 100px;
 `   ;
 
-export default function StoryColumn({ statuses, phase, id }) {
+export default function PhaseColumn({ statuses, phase, id }) {
     const [stories, setStories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
