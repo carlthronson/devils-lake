@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PhaseColumn from './PhaseColumn.jsx';
 
-const StoryArea = styled.div`
+const StoryBoardArea = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -34,13 +34,13 @@ export default function StoryBoard() {
   }, []);
 
   return (
-    <StoryArea>
+    <StoryBoardArea>
       {/* This is where we will have columns for workflow states */}
       {(isLoadingPhases || isLoadingStatuses) ? 'Takes 20 seconds to warm up the AWS Lambda...' : phases.map((phase, index) => (
         phase.name == 'done' ? null :
           <PhaseColumn key={index} id={index} statuses={statuses} phase={phase}></PhaseColumn>
       ))}
-    </StoryArea>
+    </StoryBoardArea>
   );
 }
 
