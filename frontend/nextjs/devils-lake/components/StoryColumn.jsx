@@ -6,12 +6,12 @@ import Story from './Story';
 const Container = styled.div`
     background-color: #f4f5f7;
     border-radius: 2.5px;
-    width: 500px;
     height: 475px;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
     border: 1px solid gray;
+    flex: 1;
 `   ;
 
 const Title = styled.h3`
