@@ -69,7 +69,7 @@ export default function Task({ task, story, statuses, index }) {
   return (
     <JobContainer>
       <JobHeader {...getToggleProps()}>
-        <Link href={task.job.linkedinurl}>{task.job.title}</Link>
+        <Link href={task.job.linkedinurl} target='_blank'>{task.job.title}</Link>
       </JobHeader>
       <JobBodyLeft {...getCollapseProps()}>
         <div style={{ display: 'flex', justifyContent: 'start', padding: 2 }}>
