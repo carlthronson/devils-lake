@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Droppable } from 'react-beautiful-dnd';
 import Story from './Story';
 
 const Container = styled.div`
@@ -57,20 +56,11 @@ export default function StoryColumn({ statuses, phase, id }) {
             >
                 {phase.label + ' - ' + stories.length}
             </Title>
-            <Droppable droppableId={id}>
-                {(provided, snapshot) => (
-                    <StoryList
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        isdraggingover={snapshot.isDraggingOver}
-                    >
-                        {isLoading ? 'Please wait' : stories.map((item, index) => (
-                            <Story key={index} index={index} statuses={statuses} story={item} />
-                            ))}
-                        {provided.placeholder}
-                    </StoryList>
-                )}
-            </Droppable>
+            <StoryList>
+                {isLoading ? 'Please wait' : stories.map((item, index) => (
+                    <Story key={index} index={index} statuses={statuses} story={item} />
+                ))}
+            </StoryList>
         </Container>
     );
 }

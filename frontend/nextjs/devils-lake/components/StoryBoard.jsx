@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { DragDropContext } from 'react-beautiful-dnd';
 import StoryColumn from './StoryColumn.jsx';
 
 const StoryArea = styled.div`
   display: flex;
   flex-direction: row;
 `;
-
-const handleDragEnd = (result) => {
-  const { destination, source, draggableId } = result;
-
-  if (destination === null) return;
-  if (source.droppableId == destination.droppableId) return;
-
-}
 
 export default function StoryBoard() {
   { /* State */ }
@@ -42,15 +33,13 @@ export default function StoryBoard() {
   }, []);
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <StoryArea>
-        {/* This is where we will have columns for workflow states */}
-        {isLoading ? 'Loading...' : phases.map((phase, index) => (
-          phase.name == 'done' ? null :
-            <StoryColumn key={index} id={index} statuses={statuses} phase={phase}></StoryColumn>
-        ))}
-      </StoryArea>
-    </DragDropContext>
+    <StoryArea>
+      {/* This is where we will have columns for workflow states */}
+      {isLoading ? 'Loading...' : phases.map((phase, index) => (
+        phase.name == 'done' ? null :
+          <StoryColumn key={index} id={index} statuses={statuses} phase={phase}></StoryColumn>
+      ))}
+    </StoryArea>
   );
 }
 
