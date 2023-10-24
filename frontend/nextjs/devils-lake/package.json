@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "antd": "^5.10.0",
+    "moment": "^2.29.4",
     "next": "13.5.4",
     "react": "^18",
     "react-collapsed": "^4.0.4",
