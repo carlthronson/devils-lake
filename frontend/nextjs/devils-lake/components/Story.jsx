@@ -5,12 +5,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Task from './Task';
 
-const StoryLabel = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-`;
-
 const StoryArea = styled.div`
     border-radius: 10px;
   box-shadow: 5px 5px 5px 2px grey;
@@ -32,9 +26,10 @@ export default function Story({ story, statuses, index }) {
 
   return (
     <StoryArea>
-      <StoryLabel {...getToggleProps()}>
-        <small>{story.label}</small>
-      </StoryLabel>
+      <div>
+      <span href='' style={{ float: 'left' }}>{story.label}</span>
+      <Link href='' style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Story'}</Link>
+      </div>
       <section {...getCollapseProps()}>
         {story.tasks.map((item, index) => (
             <Task key={index} task={item} story={story} statuses={statuses} index={index} />
