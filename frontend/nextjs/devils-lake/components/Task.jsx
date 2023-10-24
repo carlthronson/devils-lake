@@ -5,6 +5,7 @@ import Select from 'react-select'
 import React, { useState, useEffect } from 'react';
 import { useCollapse } from 'react-collapsed'
 // import { stat } from 'fs';
+import moment from 'moment';
 
 const customStyles = {
   container: (provided) => ({
@@ -140,7 +141,7 @@ export default function Task({ task, story, statuses, index }) {
         </div>
 
         <Row>Location: {story.location}</Row>
-        <Row>Posted: today</Row>
+        <Row>Posted: {moment.utc(task.job.publishedAt).fromNow()}</Row>
         <Row>Salary: {task.job.salary}</Row>
         <Row>Contract type: {task.job.contracttype}</Row>
         <Row>Experience Level: {task.job.experiencelevel}</Row>
