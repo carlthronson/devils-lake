@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import personal.carlthronson.dl.be.job.Job;
 
 @Service
 @Transactional
@@ -27,7 +28,9 @@ public class TaskService {
     }
 
     public List<Task> findAllByJob(Long jobId) {
-        return repository.findAllByJob(jobId);
+        Job job = new Job();
+        job.setId(jobId);
+        return repository.findAllByJob(job);
     }
 
 }
