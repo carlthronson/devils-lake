@@ -1,5 +1,10 @@
 package personal.carlthronson.dl.be.job;
 
+import java.time.OffsetDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,4 +29,7 @@ public class Job {
     @Getter @Setter String salary;
     @Getter @Setter String sector;
     @Getter @Setter String worktype;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
+    @Column(name = "published_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Getter @Setter OffsetDateTime publishedAt;
 }
