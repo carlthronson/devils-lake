@@ -1,6 +1,7 @@
 package personal.carlthronson.dl.be.story;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,7 +64,39 @@ public class StoryService {
 
         // One last step would be to remove tasks from stories
         // That have the wrong status
-        return list;
+        List<Story> clean = new ArrayList<>();
+        for (Story story: list) {
+            List<Task> cleanTasks = new ArrayList<>();
+            for (Task task: story.getTasks()) {
+                if (phase.getStatuses().contains(task.getStatus())) {
+                    cleanTasks.add(task);
+                }
+            }
+            cleanTasks.sort(new Comparator<Task>() {
+
+                @Override
+                public int compare(Task o1, Task o2) {
+                    return o1.getJob().getTitle().compareTo(o2.getJob().getTitle());
+                }
+
+            });
+            Story cleanStory = new Story();
+            cleanStory.setId(story.getId());
+            cleanStory.setName(story.getName());
+            cleanStory.setPhase(story.getPhase());
+            cleanStory.setLabel(story.getLabel());
+            cleanStory.setLocation(story.getLocation());
+            cleanStory.setTasks(cleanTasks);
+            clean.add(cleanStory);
+        }
+        clean.sort(new Comparator<Story>() {
+
+            @Override
+            public int compare(Story o1, Story o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return clean;
     }
 
     private Set<Story> getStories(Phase phase, Pageable pageable) {
