@@ -1,40 +1,34 @@
-package personal.carlthronson.dl.be.story;
+package personal.carlthronson.dl.be.dto;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.task.Status;
+import personal.carlthronson.dl.be.entity.PhaseEntity;
 
-@Entity(name="phase")
 public class Phase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private long id;
+    public Phase() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Phase(PhaseEntity entity) {
+        if (entity != null) {
+            this.setId(entity.getId());
+            this.setName(entity.getName());
+            this.setLabel(entity.getLabel());
+            // Don't serialize statues
+            // Don't serialize stories
+        }
+    }
 
     @Getter
     @Setter
-    private String name;
+    private Long id;
+
+    @Getter
+    @Setter
+    String name;
 
     @Getter
     @Setter
     private String label;
-
-    @Getter
-    @Setter
-    @OneToMany
-    @JoinColumn(name = "phase_id", nullable = true, unique = false)
-    @JsonManagedReference
-    private List<Status> statuses;
 }

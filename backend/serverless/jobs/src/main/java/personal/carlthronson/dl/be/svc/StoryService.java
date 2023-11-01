@@ -1,86 +1,123 @@
-package personal.carlthronson.dl.be.story;
+
+package personal.carlthronson.dl.be.svc;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import personal.carlthronson.dl.be.task.Task;
-import personal.carlthronson.dl.be.task.TaskRepository;
+import personal.carlthronson.dl.be.entity.PhaseEntity;
+import personal.carlthronson.dl.be.entity.StatusEntity;
+import personal.carlthronson.dl.be.entity.StoryEntity;
+import personal.carlthronson.dl.be.entity.TaskEntity;
+import personal.carlthronson.dl.be.repo.PhaseRepository;
+import personal.carlthronson.dl.be.repo.SimpleRepository;
+//import personal.carlthronson.dl.be.entity.PhaseEntity;
+//import personal.carlthronson.dl.be.entity.StoryEntity;
+//import personal.carlthronson.dl.be.entity.TaskEntity;
+import personal.carlthronson.dl.be.repo.StoryRepository;
+import personal.carlthronson.dl.be.repo.TaskRepository;
 
 @Service
 @Transactional
-public class StoryService {
+public class StoryService extends SimpleService<StoryEntity> {
+
+    Logger logger = Logger.getLogger(StoryService.class.getName());
 
     @Autowired
-    StoryRepository storyRepository;
+    StoryRepository repository;
+
+    @Override
+    public SimpleRepository<StoryEntity> getSimpleRepository() {
+        return this.repository;
+    }
+
+    @Override
+    public JpaRepository<StoryEntity, Long> getJpaRepository() {
+        return this.repository;
+    }
+
+    // ****** Custom methods ***********
+
+    @Override
+    public StoryEntity save(StoryEntity entity) {
+        if (repository.existsByName(entity.getName())) {
+            return findByName(entity.getName());
+        }
+        return super.save(entity);
+    }
 
     @Autowired
-    PhaseService phaseService;
+    PhaseRepository phaseRepository;
 
     @Autowired
     TaskRepository taskRepository;
 
-    public List<Story> findByPhase(String phaseName, Pageable pageable) {
+    public List<StoryEntity> findByPhase(String phaseName, Pageable pageable) {
 
         // Phase name parameter
         System.out.println("phaseName = " + phaseName);
-        Phase phase = phaseService.getByName(phaseName);
+        PhaseEntity phase = phaseRepository.findByName(phaseName);
 
         // Trigger this so paging works better
         long count = taskRepository.countAllByStatusIn(phase.getStatuses());
         System.out.println("These are the statuses: " + phase.getStatuses());
-        System.out.println("There are " + count + " task instances with these statuses.");
+        System.out.println(
+                "There are " + count + " task instances with these statuses.");
 
-        List<Story> list = new ArrayList<>();
+        List<StoryEntity> list = new ArrayList<>();
 
         // Use set to avoid duplicate stories
         if (count > pageable.getPageSize()) {
-            Set<Story> result = getStories(phase, pageable);
+            Set<StoryEntity> result = getStories(phase, pageable);
             list.addAll(result);
         } else {
             // Get all the stories that have a task in this page of tasks
             System.out.println("Don't use paging");
-            List<Task> tasks = taskRepository.findAllByStatusIn(phase.getStatuses());
+            List<TaskEntity> tasks = taskRepository
+                    .findAllByStatusIn(phase.getStatuses());
             System.out.println("Tasks: " + tasks.size());
 
-            List<Story> stories = storyRepository.findAllByTasksIn(tasks);
+            List<StoryEntity> stories = repository.findAllByTasksIn(tasks);
             // The number of stories and tasks could be different
             // Each task appears in exactly one story
             // But Story to Task is one to many
             System.out.println("Stories: " + stories.size());
 
-            Set<Story> result = new HashSet<>();
+            Set<StoryEntity> result = new HashSet<>();
             result.addAll(stories);
             list.addAll(result);
         }
 
         // One last step would be to remove tasks from stories
         // That have the wrong status
-        List<Story> clean = new ArrayList<>();
-        for (Story story: list) {
-            List<Task> cleanTasks = new ArrayList<>();
-            for (Task task: story.getTasks()) {
+        List<StoryEntity> clean = new ArrayList<>();
+        for (StoryEntity story : list) {
+            List<TaskEntity> cleanTasks = new ArrayList<>();
+            for (TaskEntity task : story.getTasks()) {
                 if (phase.getStatuses().contains(task.getStatus())) {
                     cleanTasks.add(task);
                 }
             }
-            cleanTasks.sort(new Comparator<Task>() {
+            cleanTasks.sort(new Comparator<TaskEntity>() {
 
                 @Override
-                public int compare(Task o1, Task o2) {
-                    return o1.getJob().getTitle().compareTo(o2.getJob().getTitle());
+                public int compare(TaskEntity o1, TaskEntity o2) {
+                    return o1.getJob().getName()
+                            .compareTo(o2.getJob().getName());
                 }
 
             });
-            Story cleanStory = new Story();
+            StoryEntity cleanStory = new StoryEntity();
             cleanStory.setId(story.getId());
             cleanStory.setName(story.getName());
             cleanStory.setPhase(story.getPhase());
@@ -89,55 +126,61 @@ public class StoryService {
             cleanStory.setTasks(cleanTasks);
             clean.add(cleanStory);
         }
-        clean.sort(new Comparator<Story>() {
+        clean.sort(new Comparator<StoryEntity>() {
 
             @Override
-            public int compare(Story o1, Story o2) {
+            public int compare(StoryEntity o1, StoryEntity o2) {
                 return o1.getName().compareTo(o2.getName());
             }
         });
         return clean;
     }
 
-    private Set<Story> getStories(Phase phase, Pageable pageable) {
-        Set<Story> result = new HashSet<>();
+    private Set<StoryEntity> getStories(PhaseEntity phase, Pageable pageable) {
+        Set<StoryEntity> result = new HashSet<>();
 
         while (true) {
             // Get the (next) page of tasks
             System.out.println("Pageable: " + pageable);
-            Page<Task> tasksPage = taskRepository.findAllByStatusIn(phase.getStatuses(), pageable);
+            Page<TaskEntity> tasksPage = taskRepository
+                    .findAllByStatusIn(phase.getStatuses(), pageable);
             System.out.println("Tasks page: " + tasksPage);
             System.out.println("Page number: " + tasksPage.getNumber());
             System.out.println("Total pages: " + tasksPage.getTotalPages());
             System.out.println("Total tasks: " + tasksPage.getTotalElements());
 
-            if (tasksPage.getNumber() > tasksPage.getTotalPages() &&
-                    tasksPage.hasPrevious()) {
+            if (tasksPage.getNumber() > tasksPage.getTotalPages()
+                    && tasksPage.hasPrevious()) {
                 pageable = tasksPage.previousPageable();
-                tasksPage = taskRepository.findAllByStatusIn(phase.getStatuses(), pageable);
+                tasksPage = taskRepository
+                        .findAllByStatusIn(phase.getStatuses(), pageable);
                 System.out.println("Tasks page: " + tasksPage);
                 System.out.println("Total pages: " + tasksPage.getTotalPages());
-                System.out.println("Total tasks: " + tasksPage.getTotalElements());
+                System.out.println(
+                        "Total tasks: " + tasksPage.getTotalElements());
             }
 
             // Get all the stories that have a task in this page of tasks
-            List<Task> tasks = tasksPage.getContent();
+            List<TaskEntity> tasks = tasksPage.getContent();
             System.out.println("Tasks: " + tasks.size());
 
-            List<Story> stories = storyRepository.findAllByTasksIn(tasks);
+            List<StoryEntity> stories = repository.findAllByTasksIn(tasks);
             // The number of stories and tasks could be different
             // Each task appears in exactly one story
             // But Story to Task is one to many
             System.out.println("Stories: " + stories.size());
 
             // Add stories one at a time until we reach pageSize
-            for (int index = 0; index < stories.size() && result.size() < pageable.getPageSize(); index++) {
-                Story story = stories.get(index);
+            for (int index = 0; index < stories.size()
+                    && result.size() < pageable.getPageSize(); index++) {
+                StoryEntity story = stories.get(index);
                 result.add(story);
             }
 
-            // If we reach pageSize stories or we run out of tasks we are done here
-            if (result.size() >= pageable.getPageSize() || !tasksPage.hasNext()) {
+            // If we reach pageSize stories or we run out of tasks we are done
+            // here
+            if (result.size() >= pageable.getPageSize()
+                    || !tasksPage.hasNext()) {
                 break;
             }
 
@@ -147,28 +190,57 @@ public class StoryService {
         return result;
     }
 
-    public Story save(Story story) {
-//      System.out.println("Request to story controller: " + story);
-      if (story.getId() == 0 && storyRepository.existsByName(story.getName())) {
-//          Story probe = new Story();
-//          probe.setName(story.getName());
-//          ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("name",
-//                  ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
-//          Example<Story> example = Example.of(probe, matcher);
-//          Optional<Story> optional = storyRepository.findOne(example);
-//          if (optional.isPresent()) {
-//              return optional.get();
-//          }
-          return storyRepository.getByName(story.getName());
-      }
-      return storyRepository.save(story);
+    public Page<StoryEntity> findAll(Pageable pageable) {
+        return this.repository.findAll(pageable);
     }
 
-    public Story getById(Long id) {
-        return storyRepository.getById(id);
+    public List<StoryEntity> findPageByPhase(String phaseName,
+            Pageable pageable) {
+        logger.info("findPageByPhase");
+        PhaseEntity phase = phaseRepository.findByName(phaseName);
+//        logger.info("Phase entity: " + phase.getName());
+        Page<TaskEntity> taskPage = taskRepository
+                .findAllByStatusIn(phase.getStatuses(), pageable);
+//        logger.info("Tasks page: " + taskPage);
+        Page<StoryEntity> storiesPage = repository
+                .findAllByTasksIn(taskPage.getContent(), pageable);
+//        logger.info("Stories page: " + storiesPage);
+        List<StoryEntity> list = new ArrayList<>();
+        for (StoryEntity entity : storiesPage.getContent()) {
+//            logger.info("Story entity: " + entity.getName());
+            StoryEntity storyEntity = new StoryEntity();
+            storyEntity.setId(entity.getId());
+            storyEntity.setName(entity.getName());
+            storyEntity.setLabel(entity.getLabel());
+            List<TaskEntity> originalList = entity.getTasks();
+            System.out.println("Original tasks: " + originalList.size());
+            List<TaskEntity> newList = originalList.stream()
+                    .filter(task -> filterTask(task, phaseName)).toList();
+            System.out.println("New tasks: " + newList.size());
+            storyEntity.setTasks(newList);
+            storyEntity.setPhase(entity.getPhase());
+            list.add(storyEntity);
+        }
+        list = list.stream().sorted(new Comparator<StoryEntity>() {
+
+            @Override
+            public int compare(StoryEntity o1, StoryEntity o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        }).toList();
+        return list;
     }
 
-    public Page<Story> findAll(Pageable pageable) {
-        return storyRepository.findAll(pageable);
+    private Boolean filterTask(TaskEntity task, String phaseName) {
+        System.out.println("Filter task - task name: " + task.getName());
+        System.out.println("Filter task - target phase name: " + phaseName);
+        StatusEntity statusEntity = task.getStatus();
+        System.out.println(
+                "Filter task - status name: " + statusEntity.getName());
+        PhaseEntity phaseEntity = statusEntity.getPhase();
+        System.out.println("Filter task - status phase name: " + phaseName);
+        boolean result = phaseEntity.getName().compareTo(phaseName) == 0;
+        System.out.println("Filter task - result: " + result);
+        return result;
     }
 }

@@ -1,36 +1,79 @@
-package personal.carlthronson.dl.be.task;
+package personal.carlthronson.dl.be.svc;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import personal.carlthronson.dl.be.job.Job;
+import personal.carlthronson.dl.be.entity.JobEntity;
+import personal.carlthronson.dl.be.entity.StatusEntity;
+import personal.carlthronson.dl.be.entity.StoryEntity;
+import personal.carlthronson.dl.be.entity.TaskEntity;
+import personal.carlthronson.dl.be.repo.SimpleRepository;
+import personal.carlthronson.dl.be.repo.StatusRepository;
+import personal.carlthronson.dl.be.repo.StoryRepository;
+import personal.carlthronson.dl.be.repo.TaskRepository;
 
 @Service
 @Transactional
-public class TaskService {
+public class TaskService extends SimpleService<TaskEntity> {
 
     @Autowired
     TaskRepository repository;
 
-    public Task save(Task task) {
-        return repository.save(task);
+    @Autowired
+    StatusRepository statusRepository;
+
+    @Autowired
+    StoryRepository storyRepository;
+
+    @Override
+    public SimpleRepository<TaskEntity> getSimpleRepository() {
+        return this.repository;
     }
 
-    public Task getById(Long id) {
-        return repository.getById(id);
+    @Override
+    public JpaRepository<TaskEntity, Long> getJpaRepository() {
+        return this.repository;
     }
 
-    public List<Task> findAll() {
-        return repository.findAll();
+    // ****** Custom methods ***********
+
+    public List<TaskEntity> findAllByJob(Long id) {
+        JobEntity job = new JobEntity();
+        job.setId(id);
+        List<TaskEntity> list = this.repository.findAllByJob(job);
+        return list;
     }
 
-    public List<Task> findAllByJob(Long jobId) {
-        Job job = new Job();
-        job.setId(jobId);
-        return repository.findAllByJob(job);
-    }
+    public Optional<TaskEntity> update(Long taskId, Long statusId) {
+        List<TaskEntity> tasks = this.repository.findAllById(taskId);
+        List<StoryEntity> stories = this.storyRepository
+                .findAllByTasksIn(tasks);
+        Predicate<? super TaskEntity> predicate = new Predicate<TaskEntity>() {
 
+            @Override
+            public boolean test(TaskEntity t) {
+                return t.getId().compareTo(taskId) == 0;
+            }
+        };
+
+        for (StoryEntity story : stories) {
+            Optional<TaskEntity> optionalTaskEntity = story.getTasks().stream()
+                    .filter(predicate).findFirst();
+            if (optionalTaskEntity.isPresent()) {
+                StatusEntity statusEntity = this.statusRepository
+                        .getById(statusId);
+                TaskEntity taskEntity = optionalTaskEntity.get();
+                taskEntity.setStatus(statusEntity);
+                taskEntity = save(taskEntity);
+                return Optional.of(taskEntity);
+            }
+        }
+        return Optional.empty();
+    }
 }

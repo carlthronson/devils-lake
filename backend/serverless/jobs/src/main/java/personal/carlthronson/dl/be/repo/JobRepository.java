@@ -1,16 +1,17 @@
-package personal.carlthronson.dl.be.job;
-
-import java.util.List;
+package personal.carlthronson.dl.be.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface JobRepository extends JpaRepository<Job, Long> {
+import personal.carlthronson.dl.be.entity.JobEntity;
 
-    Job getById(Long id);
+@Repository
+@Transactional
+public interface JobRepository
+        extends JpaRepository<JobEntity, Long>, SimpleRepository<JobEntity> {
 
-    Job getByLinkedinid(Long linkedinid);
+    JobEntity getByLinkedinid(Long linkedinid);
 
     boolean existsByLinkedinid(long linkedinid);
-
-    List<Job> findAllByTitle(String title);
 }
