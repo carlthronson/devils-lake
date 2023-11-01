@@ -1,31 +1,37 @@
-package personal.carlthronson.dl.be.story;
+package personal.carlthronson.dl.be.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.task.Task;
+import personal.carlthronson.dl.be.entity.StoryEntity;
 
-@Entity(name = "story")
 public class Story {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private long id;
+
+    public Story() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Story(StoryEntity entity) {
+        if (entity != null) {
+            this.setId(entity.getId());
+            this.setName(entity.getName());
+            this.setLabel(entity.getLabel());
+            this.setLink(entity.getLink());
+            this.setLocation(entity.getLocation());
+            this.setPhase(new Phase(entity.getPhase()));
+            this.setTasks(entity.getTasks().stream()
+                    .map(taskEntity -> new Task(taskEntity)).toList());
+        }
+    }
 
     @Getter
     @Setter
-    private String name;
+    private Long id;
+
+    @Getter
+    @Setter
+    String name;
 
     @Getter
     @Setter
@@ -41,14 +47,9 @@ public class Story {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "phase_id", nullable = false, unique = false)
     private Phase phase;
 
     @Getter
     @Setter
-    @OneToMany
-    @JoinColumn(name = "story_id", nullable = true, unique = false)
-    @JsonManagedReference
     private List<Task> tasks;
 }

@@ -1,59 +1,52 @@
-package personal.carlthronson.dl.be.task;
+package personal.carlthronson.dl.be.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.job.Job;
-import personal.carlthronson.dl.be.story.Story;
+import personal.carlthronson.dl.be.entity.TaskEntity;
 
-@Entity(name = "task")
 public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private long id;
+
+    public Task() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Task(TaskEntity entity) {
+        if (entity != null) {
+            this.setId(entity.getId());
+            this.setName(entity.getName());
+            this.setLabel(entity.getLabel());
+            this.setJob(new Job(entity.getJob()));
+            this.setStatus(new Status(entity.getStatus()));
+            this.setLocation(entity.getLocation());
+            // Don't serialize story
+        }
+    }
 
     @Getter
     @Setter
-    private String name;
+    private Long id;
+
+    @Getter
+    @Setter
+    String name;
 
     @Getter
     @Setter
     private String label;
-
-    @Getter
-    @Setter
-    private String link;
-
+    
     @Getter
     @Setter
     private String location;
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false, unique = false)
+    private Job job;
+
+    @Getter
+    @Setter
     private Status status;
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "story_id", nullable = true, unique = false)
-    @JsonBackReference
     private Story story;
-
-    @Getter
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "job_id", nullable = true, unique = false)
-    private Job job;
 }

@@ -1,38 +1,42 @@
-package personal.carlthronson.dl.be.task;
+package personal.carlthronson.dl.be.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.story.Phase;
+import personal.carlthronson.dl.be.entity.StatusEntity;
 
-@Entity(name="status")
 public class Status {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    private long id;
+    public Status() {
+    }
+
+    public Status(StatusEntity entity) {
+        if (entity != null) {
+            this.setId(entity.getId());
+            this.setName(entity.getName());
+            this.setLabel(entity.getLabel());
+            this.setPhase(new Phase(entity.getPhase()));
+            // Don't serialize tasks
+            // Don't serialize titles
+        }
+    }
 
     @Getter
     @Setter
-    private String name;
+    private Long id;
+
+    @Getter
+    @Setter
+    String name;
 
     @Getter
     @Setter
     private String label;
 
+//    @Getter
+//    @Setter
+//    private Long phase_id;
+
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "phase_id", nullable = true, unique = false)
-    @JsonBackReference
     private Phase phase;
 }

@@ -1,4 +1,4 @@
-package personal.carlthronson.dl.be.task;
+package personal.carlthronson.dl.be.repo;
 
 import java.util.List;
 
@@ -8,17 +8,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import personal.carlthronson.dl.be.job.Job;
+import personal.carlthronson.dl.be.entity.JobEntity;
+import personal.carlthronson.dl.be.entity.StatusEntity;
+import personal.carlthronson.dl.be.entity.TaskEntity;
 
 @Repository
 @Transactional
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface TaskRepository
+        extends JpaRepository<TaskEntity, Long>, SimpleRepository<TaskEntity> {
 
-    Page<Task> findAllByStatusIn(List<Status> statuses, Pageable pageable);
+    Page<TaskEntity> findAllByStatusIn(List<StatusEntity> statuses,
+            Pageable pageable);
 
-    long countAllByStatusIn(List<Status> statuses);
+    long countAllByStatusIn(List<StatusEntity> statuses);
 
-    List<Task> findAllByStatusIn(List<Status> statuses);
+    List<TaskEntity> findAllByStatusIn(List<StatusEntity> statuses);
 
-    List<Task> findAllByJob(Job job);
+    List<TaskEntity> findAllByJob(JobEntity job);
+
 }
