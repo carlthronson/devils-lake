@@ -12,3 +12,9 @@ target
 
 # Serverless directories
 .serverless
+
+# Bash shell scripts
+*.sh
+
+# json files
+*.json
