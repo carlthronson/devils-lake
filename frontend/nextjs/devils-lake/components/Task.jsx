@@ -115,7 +115,7 @@ export default function Task({ task, story, statuses, index }) {
   return (
     <TaskArea>
       <div>
-        <Link style={{ float: 'left' }} href={task.job.linkedinurl} target='_blank'>{task.job.title}</Link>
+        <Link style={{ float: 'left' }} href={task.job.linkedinurl} target='_blank'>{task.job.name}</Link>
         {/* <p style={{float: 'right'}}>Right-aligned text</p> */}
         <Link style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Task'}</Link>
       </div>
@@ -133,9 +133,11 @@ export default function Task({ task, story, statuses, index }) {
             isSearchable={false}
             name="Status"
             options=
-            {statuses.map((item, index) => (
-              { index: index, value: item.name, label: item.label }
-            ))}
+            {statuses
+              .filter((item) => item.name != 'invalid')
+              .map((item, index) => (
+                { index: index, value: item.name, label: item.label }
+              ))}
             onChange={handleChange}
           />
         </div>

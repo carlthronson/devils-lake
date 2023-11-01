@@ -33,7 +33,7 @@ export default function PhaseColumn({ statuses, phase, id }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const url = "/api/story/phase/" + phase.name + "/?pageNumber=1&pageSize=1000";
+        const url = "/api/story/phase/" + phase.name + "/?pageNumber=0&pageSize=2000";
         console.log("url: " + url);
         fetch(url)
             .then((response) => {

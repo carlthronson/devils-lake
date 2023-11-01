@@ -15,7 +15,7 @@ export default function StoryBoard() {
   const [isLoadingStatuses, setIsLoadingStatuses] = useState(true);
 
   useEffect(() => {
-    const statusurl = "/api/status";
+    const statusurl = "/api/status/findall?limit=10";
     fetch(statusurl)
       .then((response) => response.json())
       .then((json) => {
@@ -23,7 +23,7 @@ export default function StoryBoard() {
         setIsLoadingStatuses(false);
       });
 
-    const url = "/api/phase";
+    const url = "/api/phase/findall?limit=10";
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
