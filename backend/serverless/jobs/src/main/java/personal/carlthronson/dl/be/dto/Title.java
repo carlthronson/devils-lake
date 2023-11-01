@@ -1,24 +1,39 @@
-package personal.carlthronson.dl.be.job;
+package personal.carlthronson.dl.be.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.Setter;
-import personal.carlthronson.dl.be.task.Status;
+import personal.carlthronson.dl.be.entity.TitleEntity;
 
-@Entity(name = "title")
 public class Title {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Title() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Title(TitleEntity entity) {
+        if (entity != null) {
+            this.setId(entity.getId());
+            this.setName(entity.getName());
+            this.setLabel(entity.getLabel());
+            this.setStatus(new Status(entity.getStatus()));
+        }
+    }
+
     @Getter
     @Setter
-    private long id;
+    private Long id;
 
-    @Getter @Setter String name;
-    @JoinColumn(name = "status_id", nullable = false, unique = false)
-    @Getter @Setter Status status;
+    // Every entity needs a name
+    @Getter
+    @Setter
+    String name;
+
+    // Custom field
+    @Getter
+    @Setter
+    private String label;
+
+    @Getter
+    @Setter
+    private Status status;
 }
