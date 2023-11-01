@@ -1,41 +1,57 @@
-package personal.carlthronson.dl.be.job;
+package personal.carlthronson.dl.be.svc;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
-import personal.carlthronson.dl.be.task.Task;
-import personal.carlthronson.dl.be.task.TaskService;
+import jakarta.transaction.Transactional;
+import personal.carlthronson.dl.be.entity.JobEntity;
+import personal.carlthronson.dl.be.entity.TaskEntity;
+import personal.carlthronson.dl.be.entity.TitleEntity;
+import personal.carlthronson.dl.be.repo.SimpleRepository;
+import personal.carlthronson.dl.be.repo.TitleRepository;
 
-public class TitleService {
+@Service
+@Transactional
+public class TitleService extends SimpleService<TitleEntity> {
 
     @Autowired
     TitleRepository repository;
 
+    @Override
+    public SimpleRepository<TitleEntity> getSimpleRepository() {
+        return this.repository;
+    }
+
+    @Override
+    public JpaRepository<TitleEntity, Long> getJpaRepository() {
+        return this.repository;
+    }
+
+    // ****** Custom methods ***********
+
     @Autowired
     JobService jobService;
-    
+
     @Autowired
     TaskService taskService;
 
-    public Title save(Title title) {
-        Title savedTitle = repository.save(title);
-        List<Job> jobs = jobService.findAllByTitle(title.name);
-        for (Job job: jobs) {
-            List<Task> tasks = taskService.findAllByJob(job.getId());
-            for (Task task: tasks) {
-                task.setStatus(savedTitle.getStatus());
+    public TitleEntity save(TitleEntity title) {
+        System.out.println("Title: " + title);
+//        TitleEntity entity = new TitleEntity(title);
+        TitleEntity result = repository.save(title);
+        System.out.println("Saved title: " + result);
+        List<JobEntity> jobs = jobService.findAllByName(result.getName());
+        for (JobEntity job : jobs) {
+            System.out.println("Job: " + job);
+            List<TaskEntity> tasks = taskService.findAllByJob(job.getId());
+            for (TaskEntity task : tasks) {
+                System.out.println("Task: " + task);
+//                task.setStatus(title.getStatus());
             }
         }
-        return savedTitle;
+        return result;
     }
-
-    public Title getById(Long id) {
-        return repository.getById(id);
-    }
-
-    public List<Title> findAll() {
-        return repository.findAll();
-    }
-
 }
