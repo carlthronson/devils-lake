@@ -112,6 +112,8 @@ export default function Task({ task, story, statuses, index }) {
       .catch(error => console.error(error));
   }
 
+  console.log("Story: " + JSON.stringify(story));
+
   return (
     <TaskArea>
       <div>
