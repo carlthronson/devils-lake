@@ -26,4 +26,11 @@ public interface TaskRepository
 
     List<TaskEntity> findAllByJob(JobEntity job);
 
+    TaskEntity findByJob(JobEntity job);
+
+    boolean existsByJob(JobEntity job);
+
+    TaskEntity getByJob(JobEntity jobEntity);
+
+    List<TaskEntity> findAllByStatus(StatusEntity status);
 }
