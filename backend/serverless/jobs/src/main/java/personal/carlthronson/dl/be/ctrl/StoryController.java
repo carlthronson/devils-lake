@@ -44,6 +44,7 @@ public class StoryController {
         storyEntity.setId(story.getId());
         storyEntity.setName(story.getName());
         storyEntity.setLabel(story.getLabel());
+        storyEntity.setLocation(story.getLocation());
         PhaseEntity phaseEntity = new PhaseEntity();
         phaseEntity.setId(story.getPhase().getId());
         storyEntity.setPhase(phaseEntity);
