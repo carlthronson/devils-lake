@@ -95,7 +95,7 @@ export default function Task({ task, story, statuses, index }) {
 
   const handleChange = (selectedOption) => {
     console.log('selected choice: ' + JSON.stringify(selectedOption));
-    task.status.id = selectedOption.index + 1;
+    task.status.name = selectedOption.value;
     task['story'] = { id: story.id };
     fetch('/api/task', {
       method: "POST",
@@ -128,7 +128,7 @@ export default function Task({ task, story, statuses, index }) {
             className="basic-single"
             classNamePrefix="select"
             defaultValue={{ value: task.status.name, label: task.status.label }}
-            isDisabled={false}
+            isDisabled={process.env.secret ? false : true}
             isLoading={false}
             isClearable={false}
             isRtl={false}
