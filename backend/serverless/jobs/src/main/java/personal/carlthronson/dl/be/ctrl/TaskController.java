@@ -151,4 +151,14 @@ public class TaskController {
             Principal principal) {
         return service.findAllByJob(jobId);
     }
+
+    @RequestMapping(path = "/task/findallbystatus/{statusName}", method = RequestMethod.GET)
+    public List<TaskEntity> findAllByStatus(@PathVariable("statusName") String statusName) {
+        return service.findAllByStatus(statusName);
+    }
+
+    @RequestMapping(path = "/task/count", method = RequestMethod.GET)
+    public Long count() {
+        return service.count();
+    }
 }
