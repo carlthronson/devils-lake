@@ -25,4 +25,14 @@ public class JobService extends SimpleService<JobEntity> {
     public JpaRepository<JobEntity, Long> getJpaRepository() {
         return this.repository;
     }
+
+    @Override
+    public JobEntity save(JobEntity entity) {
+        Long lid = entity.getLinkedinid();
+        if (this.repository.existsByLinkedinid(lid)) {
+            JobEntity existingEntity = this.repository.getByLinkedinid(lid);
+            entity.setId(existingEntity.getId());
+        }
+        return this.repository.save(entity);
+    }
 }
