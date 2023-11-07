@@ -27,7 +27,7 @@ export default function Story({ story, statuses, index }) {
   return (
     <StoryArea>
       <div>
-      <span href='' style={{ float: 'left' }}>{story.label} - {story.location}</span>
+      <span href='' style={{ float: 'left' }}>{index}: {story.label} - {story.location}</span>
       <Link href='' style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Story'}</Link>
       </div>
       <section {...getCollapseProps()}>
