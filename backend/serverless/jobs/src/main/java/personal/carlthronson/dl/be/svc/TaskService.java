@@ -76,4 +76,26 @@ public class TaskService extends SimpleService<TaskEntity> {
         }
         return Optional.empty();
     }
+
+    @Override
+    public TaskEntity save(TaskEntity entity) {
+        JobEntity jobEntity = entity.getJob();
+        if (jobEntity != null) {
+            if (this.repository.existsByJob(jobEntity)) {
+                TaskEntity existingEntity = this.repository.getByJob(jobEntity);
+                entity.setId(existingEntity.getId());
+            }
+        }
+        return this.repository.save(entity);
+    }
+
+    public List<TaskEntity> findAllByStatus(String statusName) {
+        StatusEntity status = this.statusRepository.findByName(statusName);
+        List<TaskEntity> list = this.repository.findAllByStatus(status);
+        return list;
+    }
+
+    public Long count() {
+        return this.repository.count();
+    }
 }
