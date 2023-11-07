@@ -1,3 +1,5 @@
+const cors = require('cors');
+
 module.exports = {
   async rewrites() {
     return [
@@ -6,5 +8,39 @@ module.exports = {
         destination: 'https://zve6rqyqh8.execute-api.us-west-1.amazonaws.com/dev/:path*' // Proxy to Backend
       }
     ]
+  },
+  async headers() {
+    return [
+      {
+        // Allow requests from all domains
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
+  },
+};
+
+// Enable CORS for all API routes
+const handler = (req, res) => {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
   }
-}
+
+  // Handle API requests
+  res.status(200).json({ name: 'John Doe' });
+};
+
+// export default handler;

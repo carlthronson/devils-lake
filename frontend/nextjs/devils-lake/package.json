@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "antd": "^5.10.0",
+    "cors": "^2.8.5",
     "moment": "^2.29.4",
     "next": "13.5.4",
     "react": "^18",
