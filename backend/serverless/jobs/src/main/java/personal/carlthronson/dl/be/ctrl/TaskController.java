@@ -25,10 +25,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import personal.carlthronson.dl.be.dto.Task;
 import personal.carlthronson.dl.be.dto.TaskUpdate;
-import personal.carlthronson.dl.be.entity.JobEntity;
 import personal.carlthronson.dl.be.entity.StatusEntity;
-import personal.carlthronson.dl.be.entity.StoryEntity;
 import personal.carlthronson.dl.be.entity.TaskEntity;
+import personal.carlthronson.dl.be.svc.StatusService;
 import personal.carlthronson.dl.be.svc.TaskService;
 
 @RestController
@@ -48,7 +47,11 @@ public class TaskController {
 
     @Autowired
     TaskService service;
+
     Logger logger = Logger.getLogger(TaskController.class.getName());
+
+    @Autowired
+    StatusService statusService;
 
     @RequestMapping(path = "/task/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(name = "id") Long id) {
@@ -68,25 +71,9 @@ public class TaskController {
     @RequestMapping(path = "/task", method = RequestMethod.POST)
     public TaskEntity save(@RequestBody Task task) {
         logger.info("Request body: " + task);
-        TaskEntity taskEntity = new TaskEntity();
-        taskEntity.setId(task.getId());
-        taskEntity.setName(task.getName());
-        taskEntity.setLabel(task.getLabel());
-        if (task.getJob() != null) {
-            JobEntity jobEntity = new JobEntity();
-            jobEntity.setId(task.getJob().getId());
-            taskEntity.setJob(jobEntity);
-        }
-        if (task.getStatus() != null) {
-            StatusEntity statusEntity = new StatusEntity();
-            statusEntity.setId(task.getStatus().getId());
-            taskEntity.setStatus(statusEntity);
-        }
-        if (task.getStory() != null) {
-            StoryEntity storyEntity = new StoryEntity();
-            storyEntity.setId(task.getStory().getId());
-            taskEntity.setStory(storyEntity);
-        }
+        TaskEntity taskEntity = this.service.findByName(task.getName());
+        StatusEntity statusEntity = this.statusService.findByName(task.getStatus().getName());
+        taskEntity.setStatus(statusEntity);
         return service.save(taskEntity);
     }
 
