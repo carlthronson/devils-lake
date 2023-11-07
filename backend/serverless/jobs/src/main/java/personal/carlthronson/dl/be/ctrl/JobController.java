@@ -41,6 +41,7 @@ public class JobController {
         jobEntity.setName(job.getName());
         jobEntity.setLabel(job.getLabel());
         jobEntity.setLinkedinid(job.getLinkedinid());
+        jobEntity.setLinkedinurl(job.getLinkedinurl());
         jobEntity.setPublishedAt(job.getPublishedAt());
         return service.save(jobEntity);
     }
