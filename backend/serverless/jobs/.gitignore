@@ -18,3 +18,5 @@ target
 
 # json files
 *.json
+
+DataSourceConfig.java
