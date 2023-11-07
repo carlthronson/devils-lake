@@ -14,6 +14,7 @@ const SubTitle = styled.h2`
 
 export default function Page() {
   const [taskCount, setTaskCount] = useState(0);
+  const [mode, setMode] = useState(null);
 
   useEffect(() => {
     const url = "/api/task/count";
@@ -27,11 +28,13 @@ export default function Page() {
       .then((data) => {
         setTaskCount(data);
       });
+    setMode(process.env.MODE);
   });
 
   return <div>
     <Title>After processing {taskCount} job openings...</Title>
     <SubTitle>These jobs remain as possibilities.</SubTitle>
+    <SubTitle>This view is in {mode == null ? 'READONLY' : mode} mode</SubTitle>
     <div>
       {/* Coming soon... */}
       <StoryBoard></StoryBoard>

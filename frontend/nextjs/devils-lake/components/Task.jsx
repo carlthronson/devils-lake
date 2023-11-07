@@ -114,6 +114,8 @@ export default function Task({ task, story, statuses, index }) {
 
   // console.log("Story: " + JSON.stringify(story));
 
+  const isDisabled = (process.env.MODE == 'LIVE') ? false : true;
+
   return (
     <TaskArea>
       <div>
@@ -128,7 +130,7 @@ export default function Task({ task, story, statuses, index }) {
             className="basic-single"
             classNamePrefix="select"
             defaultValue={{ value: task.status.name, label: task.status.label }}
-            isDisabled={process.env.secret ? false : true}
+            isDisabled={isDisabled}
             isLoading={false}
             isClearable={false}
             isRtl={false}

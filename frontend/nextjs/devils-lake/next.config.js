@@ -1,6 +1,10 @@
 const cors = require('cors');
 
 module.exports = {
+  reactStrictMode: true,
+  env: {
+    MODE: process.env.MODE,
+  },
   async rewrites() {
     return [
       {
