@@ -12,7 +12,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource getDataSource() {
         String user = "postgres";
-        String password = "postgres";
+        String password = "8Xbk2334$&@";
         String host = "devils-lake.cvrbdk7xgglz.us-west-1.rds.amazonaws.com";
         String port = "5432";
         Object database = "devils_lake";
