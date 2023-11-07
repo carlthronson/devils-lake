@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import personal.carlthronson.dl.be.entity.JobEntity;
 import personal.carlthronson.dl.be.entity.PhaseEntity;
 import personal.carlthronson.dl.be.entity.StatusEntity;
 import personal.carlthronson.dl.be.entity.StoryEntity;
@@ -212,6 +213,7 @@ public class StoryService extends SimpleService<StoryEntity> {
             storyEntity.setId(entity.getId());
             storyEntity.setName(entity.getName());
             storyEntity.setLabel(entity.getLabel());
+            storyEntity.setLocation(entity.getLocation());
             List<TaskEntity> originalList = entity.getTasks();
             System.out.println("Original tasks: " + originalList.size());
             List<TaskEntity> newList = originalList.stream()
@@ -223,9 +225,27 @@ public class StoryService extends SimpleService<StoryEntity> {
         }
         list = list.stream().sorted(new Comparator<StoryEntity>() {
 
+            // Reverse order, most recent first
             @Override
             public int compare(StoryEntity o1, StoryEntity o2) {
-                return o1.getName().compareTo(o2.getName());
+                JobEntity job1 = sortTasks(o1);
+                JobEntity job2 = sortTasks(o2);
+                return job2.getPublishedAt().compareTo(job1.getPublishedAt());
+            }
+
+            // Also in reverse order, most recent first
+            private JobEntity sortTasks(StoryEntity o1) {
+                List<TaskEntity> l1 = o1.getTasks().stream()
+                        .sorted(new Comparator<TaskEntity>() {
+
+                            @Override
+                            public int compare(TaskEntity o1, TaskEntity o2) {
+                                return o1.getJob().getPublishedAt().compareTo(
+                                        o2.getJob().getPublishedAt());
+                            }
+                        }).toList();
+                o1.setTasks(l1);
+                return o1.getTasks().get(0).getJob();
             }
         }).toList();
         return list;
