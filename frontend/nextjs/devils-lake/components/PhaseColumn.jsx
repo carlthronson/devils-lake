@@ -54,7 +54,7 @@ export default function PhaseColumn({ statuses, phase, id }) {
             </PhaseName>
             <StoryListArea>
                 {isLoading ? 'Please wait' : stories.map((item, index) => (
-                    <Story key={index} index={index} statuses={statuses} story={item} />
+                    <Story key={index} index={index} statuses={statuses} story={item} total={stories.length}/>
                 ))}
             </StoryListArea>
         </PhaseArea>

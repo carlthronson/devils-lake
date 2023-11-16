@@ -21,13 +21,13 @@ const StoryArea = styled.div`
     flex-direction: column;
 `   ;
 
-export default function Story({ story, statuses, index }) {
+export default function Story({ story, statuses, index, total }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
 
   return (
     <StoryArea>
       <div>
-      <span href='' style={{ float: 'left' }}>{index}: {story.label} - {story.location}</span>
+      <span href='' style={{ float: 'left' }}>{index + 1}/{total} ({story.tasks.length}) {story.label} - {story.location}</span>
       <Link href='' style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Story'}</Link>
       </div>
       <section {...getCollapseProps()}>
