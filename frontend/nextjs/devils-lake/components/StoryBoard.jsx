@@ -19,6 +19,7 @@ export default function StoryBoard() {
     fetch(statusurl)
       .then((response) => response.json())
       .then((json) => {
+        json.sort((a, b) => ((a.id > b.id) ? 1 : -1));
         setStatuses(json);
         setIsLoadingStatuses(false);
       });
