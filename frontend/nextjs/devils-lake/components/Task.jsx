@@ -146,7 +146,7 @@ export default function Task({ task, story, statuses, index }) {
           />
         </div>
 
-        <Row>Location: {story.location}</Row>
+        <Row>Location: {task.job.location || story.location}</Row>
         <Row>Posted: {moment.utc(task.job.publishedAt).fromNow()}</Row>
         <Row>Salary: {task.job.salary}</Row>
         <Row>Contract type: {task.job.contracttype}</Row>
