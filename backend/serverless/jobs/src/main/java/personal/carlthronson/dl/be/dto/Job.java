@@ -86,4 +86,8 @@ public class Job {
     @Getter
     @Setter
     private Task task;
+
+    @Getter
+    @Setter
+    private String location;
 }

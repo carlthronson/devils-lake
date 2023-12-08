@@ -44,6 +44,7 @@ public class JobController {
         jobEntity.setLinkedinurl(job.getLinkedinurl());
         jobEntity.setPublishedAt(job.getPublishedAt());
         jobEntity.setSalary(job.getSalary());
+        jobEntity.setLocation(job.getLocation());
         return service.save(jobEntity);
     }
 

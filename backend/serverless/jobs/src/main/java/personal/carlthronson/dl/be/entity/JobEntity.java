@@ -100,4 +100,8 @@ public class JobEntity {
     @Getter
     @Setter
     private TaskEntity task;
+
+    @Getter
+    @Setter
+    private String location;
 }
