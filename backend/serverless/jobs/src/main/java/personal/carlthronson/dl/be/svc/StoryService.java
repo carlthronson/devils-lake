@@ -52,7 +52,8 @@ public class StoryService extends SimpleService<StoryEntity> {
     @Override
     public StoryEntity save(StoryEntity entity) {
         if (repository.existsByName(entity.getName())) {
-            return findByName(entity.getName());
+            StoryEntity existingStory = findByName(entity.getName());
+            entity.setId(existingStory.getId());
         }
         return super.save(entity);
     }
