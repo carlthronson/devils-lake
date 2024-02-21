@@ -26,9 +26,13 @@ export default function Story({ story, statuses, index, total }) {
 
   return (
     <StoryArea>
-      <div>
-      <span href='' style={{ float: 'left' }}>{index + 1}/{total} ({story.tasks.length}) {story.label} - {story.location}</span>
-      <Link href='' style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Story'}</Link>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: 8
+      }}>
+      <span href='' style={{  }}>{index + 1}/{total} ({story.tasks.length}) {story.label} - {story.location}</span>
+      <Link href='' style={{  }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand'}</Link>
       </div>
       <section {...getCollapseProps()}>
         {story.tasks.map((item, index) => (

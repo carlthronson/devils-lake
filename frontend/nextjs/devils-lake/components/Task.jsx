@@ -118,10 +118,14 @@ export default function Task({ task, story, statuses, index }) {
 
   return (
     <TaskArea>
-      <div>
-        <Link style={{ float: 'left' }} href={task.job.linkedinurl} target='_blank'>{task.job.name}</Link>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: 8
+      }}>
+        <Link style={{  }} href={task.job.linkedinurl} target='_blank'>{task.job.name}</Link>
         {/* <p style={{float: 'right'}}>Right-aligned text</p> */}
-        <Link style={{ float: 'right' }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand Task'}</Link>
+        <Link style={{ flexShrink: 0 }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand'}</Link>
       </div>
       <div style={{ display: 'flex' }} {...getCollapseProps()}>
         <div style={{ padding: '3px' }}>Status:
