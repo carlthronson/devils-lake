@@ -1,7 +1,8 @@
 export default function RootLayout({ children }) {
+  let title = "Carl's App";
   return (
     <html lang="en">
-      <head><title>Carl's App</title></head>
+      <head><title>{title}</title></head>
       <body>{children}</body>
     </html>
   )
