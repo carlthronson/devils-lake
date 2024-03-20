@@ -4,10 +4,15 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div>
-      <h1>Home page of the job search app</h1>
+      <h1>Home page</h1>
       <div>
         <Link href="/task-board">
-          Tasks Page
+          Job search app
+        </Link>
+      </div>
+      <div>
+        <Link href="/calendar">
+          Calendar
         </Link>
       </div>
     </div>
