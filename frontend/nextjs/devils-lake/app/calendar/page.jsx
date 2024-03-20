@@ -34,6 +34,6 @@ export default function Page() {
   // });
 
   return <CalendarContainer>
-    <Calendar />
+    <Calendar calendarType='US'/>
   </CalendarContainer>
 }
