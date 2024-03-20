@@ -1,8 +1,18 @@
 // `app/task-board/page.js` is the UI for the `/task-board/` URL
 'use client'
 import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
+const CalendarContainer = styled.div`
+  height: 100%;
+  height: 100vh;
+  background-color: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`   ;
 
 export default function Page() {
   // const [taskCount, setTaskCount] = useState(0);
@@ -23,7 +33,7 @@ export default function Page() {
   //   setMode(process.env.MODE);
   // });
 
-  return <div>
+  return <CalendarContainer>
     <Calendar />
-  </div>
+  </CalendarContainer>
 }
