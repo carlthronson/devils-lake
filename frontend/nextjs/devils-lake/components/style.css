@@ -1,0 +1,19 @@
+.day {
+    border: 1px solid black;
+    margin: 1px;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    /* box-shadow: 2px 1px 1px gray; */
+}
+
+.notes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.week {
+    display: flex;
+}
