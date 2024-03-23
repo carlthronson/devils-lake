@@ -33,7 +33,7 @@ export default function Day({ day, backgroundColor, index }) {
     return <div style={style} className={'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
-            <p></p>
+            <p>{backgroundColor}</p>
         {getNotes(day).map((note, index) => (
             <p key={index}>{note}</p>
         ))}
