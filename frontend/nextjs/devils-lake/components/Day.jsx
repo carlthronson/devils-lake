@@ -14,7 +14,7 @@ let getNotes = function(day) {
 }
 
 export default function Day({ day, index }) {
-    console.log(`Day index: ${index}`);
+    // console.log(`Day index: ${index}`);
     return <div className={day.date() == moment().local().date() ? 'today day' : 'day' }>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>

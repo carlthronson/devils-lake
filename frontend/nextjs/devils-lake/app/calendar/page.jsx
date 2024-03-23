@@ -19,6 +19,9 @@ const CalendarContainer = styled.div`
 const getMonth = function () {
   // return [];
   let thisDay = moment();
+  console.log(`This day ${thisDay}`);
+  console.log(`This day local ${thisDay.local()}`);
+
   // let thisWeek = getWeek(thisDay);
   let thisMonth = thisDay.month();
 
@@ -48,27 +51,8 @@ const getWeek = function (day) {
   }
   return week;
 }
+
 export default function Page() {
-
-  let current = moment();
-  let weeks = [];
-
-  let sunday = current.clone().startOf('week');
-
-  let days = [];
-  for (let x = 0; x < 7; x++) {
-    days.push(sunday.clone().add(x, 'days'));
-  }
-
-  // days.map((day, index) => {
-  //   console.log(`Day: ${index} - ${day.format('D')}`);
-  // })
-
-  weeks.push(days);
-
-  // weeks.map((week, index) => {
-  //   console.log(`Week: ${index}`);
-  // })
 
   return <CalendarContainer>
     {getMonth().map((week, index) => (
