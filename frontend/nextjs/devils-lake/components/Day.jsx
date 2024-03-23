@@ -13,21 +13,21 @@ let getNotes = function(day) {
     return [birthdays[day.format('MMM D')]];
 }
 
-let currentDay = moment().date();
-console.log(`Current day: ${currentDay}`);
+// let currentDay = moment().date();
+// console.log(`Current day: ${currentDay}`);
 
-export default function Day({ day, index }) {
+export default function Day({ day, style, index }) {
     // console.log(`Day: ${day.date()}`);
     // console.log(`Compare to: ${moment().local().date()}`);
-    let today = day.date() == currentDay;
+    // let today = day.date() == currentDay;
 
-    console.log(`Day: ${day.date()}`);
-    console.log(`Is this day the current day: ${today}`);
-    let className = today ? 'today day' : 'day';
-    console.log(`Class name: ${className}`);
-    let style = today ? {'background-color':'yellow'} : {};
+    // console.log(`Day: ${day.date()}`);
+    // console.log(`Is this day the current day: ${today}`);
+    // let className = today ? 'today day' : 'day';
+    // console.log(`Class name: ${className}`);
+    // let style = today ? {'background-color':'yellow'} : {};
 
-    return <div style={style} className={className}>
+    return <div style={style} className={'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
         {getNotes(day).map((note, index) => (
