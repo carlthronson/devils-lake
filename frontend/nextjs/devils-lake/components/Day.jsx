@@ -19,11 +19,13 @@ let getNotes = function (day) {
 
 export default function Day({ day, backgroundColor, index }) {
     console.log(`Index: ${index} background-color: ${backgroundColor}`);
-    const [style, setStyle] = useState({});
+    // const [style, setStyle] = useState({});
 
-    useEffect(() => {
-        setStyle({ 'backgroundColor': backgroundColor });
-    }, {});
+    // useEffect(() => {
+    //     setStyle({ 'backgroundColor': backgroundColor });
+    // }, {});
+
+    let style = {'backgroundColor': backgroundColor};
 
     return <div style={style} className={'day'}>
         <div className='date'>{day.format('MMM D')}</div>
