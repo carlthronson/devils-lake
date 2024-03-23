@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import './style.css';
+import moment from 'moment';
 
 const birthdays = {
     'Apr 1': 'Kris',
@@ -14,7 +15,7 @@ let getNotes = function(day) {
 
 export default function Day({ day, index }) {
     console.log(`Day index: ${index}`);
-    return <div className='day'>
+    return <div className={day.date() == moment().date() ? 'today day' : 'day' }>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
         {getNotes(day).map((note, index) => (

@@ -7,6 +7,12 @@
     display: flex;
     flex-direction: column;
     /* box-shadow: 2px 1px 1px gray; */
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.today {
+    background-color: aqua;
 }
 
 .notes {
@@ -17,4 +23,6 @@
 
 .week {
     display: flex;
+    /* flex-grow: 1;
+    flex-shrink: 1; */
 }
