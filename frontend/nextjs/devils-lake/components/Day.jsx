@@ -25,8 +25,9 @@ export default function Day({ day, index }) {
     console.log(`Is this day the current day: ${today}`);
     let className = today ? 'today day' : 'day';
     console.log(`Class name: ${className}`);
+    let style = today ? {'background-color':'yellow'} : {};
 
-    return <div className={className}>
+    return <div style={style} className={className}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
         {getNotes(day).map((note, index) => (
