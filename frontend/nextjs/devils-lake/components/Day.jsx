@@ -10,7 +10,7 @@ const birthdays = {
     'Mar 31': 'Easter'
 }
 
-let getNotes = function(day) {
+let getNotes = function (day) {
     return [birthdays[day.format('MMM D')]];
 }
 
@@ -19,18 +19,19 @@ let getNotes = function(day) {
 
 export default function Day({ day, backgroundColor, index }) {
     console.log(`Index: ${index} background-color: ${backgroundColor}`);
-    useEffect(() => {
-      });
+    const [style, setStyle] = useState({});
 
-      let style = {'backgroundColor':backgroundColor};
+    useEffect(() => {
+        setStyle({ 'backgroundColor': backgroundColor });
+    }, {});
 
     return <div style={style} className={'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
             <p>{backgroundColor}</p>
-        {getNotes(day).map((note, index) => (
-            <p key={index}>{note}</p>
-        ))}
+            {getNotes(day).map((note, index) => (
+                <p key={index}>{note}</p>
+            ))}
         </div>
     </div>
 }
