@@ -3,7 +3,9 @@ import './style.css';
 
 const birthdays = {
     'Apr 1': 'Kris',
-    'Mar 16': 'Kate'
+    'Mar 16': 'Kate',
+    'Mar 24': 'Palm Sunday',
+    'Mar 31': 'Easter'
 }
 
 let getNotes = function(day) {
