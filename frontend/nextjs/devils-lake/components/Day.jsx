@@ -28,7 +28,7 @@ export default function Day({ day, backgroundColor, index }) {
     return <div style={style} className={'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
-            <p>{backgroundColor}</p>
+            {/* <p>{backgroundColor}</p> when this is commented out, I see the problem.*/}
             {getNotes(day).map((note, index) => (
                 <p key={index}>{note}</p>
             ))}
