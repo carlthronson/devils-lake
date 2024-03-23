@@ -10,7 +10,7 @@ export default function Week({ week, index }) {
 
     return <div className='week'>
     {week.map((day, index) => (
-        <Day day={day} style={day.date() == currentDay ? {'background-color':'yellow'} : {}} index={index} key={index}></Day>
+        <Day day={day} backgroundColor={day.date() == currentDay ? 'aqua' : 'white'} index={index} key={index}></Day>
         ))}
     </div>
 }
