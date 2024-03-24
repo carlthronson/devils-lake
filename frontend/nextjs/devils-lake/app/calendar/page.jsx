@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import Week from '../../components/Week';
 import moment from 'moment';
+import './style.css';
 
 const CalendarContainer = styled.div`
   height: 100%;
@@ -54,7 +55,7 @@ const getWeek = function (day) {
 
 export default function Page() {
 
-  return <CalendarContainer>
+  return <CalendarContainer class='calendar-container'>
     {getMonth().map((week, index) => (
       <Week week={week} index={index} key={index}/>
     ))}
