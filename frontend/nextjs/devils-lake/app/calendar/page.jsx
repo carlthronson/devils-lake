@@ -7,16 +7,6 @@ import Week from '../../components/Week';
 import moment from 'moment';
 import './style.css';
 
-const CalendarContainer = styled.div`
-  height: 100%;
-  height: 100vh;
-  background-color: antiquewhite;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`   ;
-
 const getMonth = function () {
   // return [];
   let thisDay = moment();
@@ -55,9 +45,9 @@ const getWeek = function (day) {
 
 export default function Page() {
 
-  return <CalendarContainer class='calendar-container'>
+  return <div className='calendar-container'>
     {getMonth().map((week, index) => (
       <Week week={week} index={index} key={index}/>
     ))}
-  </CalendarContainer>
+  </div>
 }
