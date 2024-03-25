@@ -1,20 +1,15 @@
 // `app/task-board/page.js` is the UI for the `/task-board/` URL
 'use client'
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import Week from '../../components/Week';
 import moment from 'moment';
 import './style.css';
 
 const getMonth = function () {
-  // return [];
   let thisDay = moment();
   console.log(`This day ${thisDay}`);
   console.log(`This day local ${thisDay.local()}`);
-
-  // let thisWeek = getWeek(thisDay);
-  let thisMonth = thisDay.month();
 
   let month = [];
   let firstDay = false;
