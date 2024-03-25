@@ -14,21 +14,18 @@ let getNotes = function (day) {
     return [birthdays[day.format('MMM D')]];
 }
 
-// let currentDay = moment().date();
-// console.log(`Current day: ${currentDay}`);
-
-export default function Day({ day, backgroundColor, index }) {
-    console.log(`Index: ${index} background-color: ${backgroundColor}`);
-    const [style, setStyle] = useState({});
+export default function Day({ day, index }) {
+    const [isToday, setIsToday] = useState(false);
+    const today = moment();
 
     useEffect(() => {
-        setStyle({ 'backgroundColor': backgroundColor });
-    }, {});
+        setIsToday(day.date() === today.date() && day.month() === today.month()
+          && day.year() === today.year());
+    }, []);
 
-    return <div style={style} className={'day'}>
+    return <div className={isToday ? 'today day' : 'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
-            {/* <p>{backgroundColor}</p> when this is commented out, I see the problem.*/}
             {getNotes(day).map((note, index) => (
                 <p key={index}>{note}</p>
             ))}
