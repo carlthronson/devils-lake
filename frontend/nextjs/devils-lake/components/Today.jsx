@@ -14,9 +14,9 @@ let getNotes = function (day) {
     return [birthdays[day.format('MMM D')]];
 }
 
-export default function Day({ day, index }) {
+export default function Today({ day, index }) {
 
-    return <div className='day'>
+    return <div className='today day'>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
             {getNotes(day).map((note, index) => (
