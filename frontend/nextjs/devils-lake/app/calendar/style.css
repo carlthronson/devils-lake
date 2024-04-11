@@ -22,8 +22,5 @@ body {
     /* justify-content: space-around; */
     flex-grow: 1;
     flex-shrink: 1;
-    margin-left: 25px;
-    margin-right: 45px;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    overflow: hidden;
 }
