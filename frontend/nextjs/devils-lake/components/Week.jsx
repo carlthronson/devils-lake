@@ -13,7 +13,7 @@ export default function Week({ week, today, index }) {
             console.log(`This day is today: ${day}`);
             days.push(<div className='today day' day={day} index={dayOfWeek} key={dayOfWeek}>TODAY</div>);
         } else {
-            days.push(<div className='day' day={day} index={dayOfWeek} key={dayOfWeek}>DAY</div>);
+            days.push(<Day className='day' day={day} index={dayOfWeek} key={dayOfWeek}></Day>);
         }
         dayOfWeek++;
     }
