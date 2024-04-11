@@ -11,9 +11,9 @@ export default function Week({ week, today, index }) {
         let isToday = day.date() === today.date() && day.month() === today.month() && day.year() === today.year();
         if (isToday) {
             console.log(`This day is today: ${day}`);
-            days.push(<Today day={day} index={dayOfWeek} key={dayOfWeek}></Today>);
+            days.push(<div className='today day' day={day} index={dayOfWeek} key={dayOfWeek}>{day.format('MMM D')}</div>);
         } else {
-            days.push(<Day day={day} index={dayOfWeek} key={dayOfWeek}></Day>);
+            // days.push(<div className='day' day={day} index={dayOfWeek} key={dayOfWeek}>{day.format('MMM D')}</div>);
         }
         dayOfWeek++;
     }
