@@ -24,7 +24,7 @@ export default function Week({ week, today, index }) {
         if (isToday) {
             console.log(`This day is today: ${day}`);
             days.push(<div className='today day' day={day} index={dayOfWeek} key={dayOfWeek}>
-                <div className='date'>{day.format('MMM D')}
+                <div className='date'>{day.date() == 1 ? day.format('MMM D') : day.format('D')}
                     {getNotes(day).map((note, index) => (
                         <p key={index}>{note}</p>
                     ))}

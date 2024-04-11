@@ -18,7 +18,7 @@ let getNotes = function (day) {
 export default function Day({ day, index }) {
 
     return <div className='day'>
-        <div className='date'>{day.format('MMM D')}</div>
+        <div className='date'>{day.date() == 1 ? day.format('MMM D') : day.format('D')}</div>
         <div className='notes'>
             {getNotes(day).map((note, index) => (
                 <p key={index}>{note}</p>
