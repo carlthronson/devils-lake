@@ -3,6 +3,18 @@ import './style.css';
 import Day from './Day.jsx';
 import Today from './Today.jsx';
 
+const birthdays = {
+    'Apr 1': 'Kris',
+    'Apr 10': 'Me',
+    'Mar 16': 'Kate',
+    'Mar 24': 'Palm Sunday',
+    'Mar 31': 'Easter'
+}
+
+let getNotes = function (day) {
+    return [birthdays[day.format('MMM D')]];
+}
+
 export default function Week({ week, today, index }) {
 
     let days = [];
@@ -11,7 +23,13 @@ export default function Week({ week, today, index }) {
         let isToday = day.date() === today.date() && day.month() === today.month() && day.year() === today.year();
         if (isToday) {
             console.log(`This day is today: ${day}`);
-            days.push(<div className='today day' day={day} index={dayOfWeek} key={dayOfWeek}>TODAY</div>);
+            days.push(<div className='today day' day={day} index={dayOfWeek} key={dayOfWeek}>
+                <div className='date'>{day.format('MMM D')}
+                {getNotes(day).map((note, index) => (
+                <p key={index}>{note}</p>
+            ))}
+                </div>
+            </div>);
         } else {
             days.push(<Day className='day' day={day} index={dayOfWeek} key={dayOfWeek}></Day>);
         }
