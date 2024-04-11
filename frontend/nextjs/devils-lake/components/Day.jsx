@@ -16,8 +16,19 @@ let getNotes = function (day) {
 
 export default function Day({ day, today, index }) {
 
-    return <div className={day.date() === today.date() && day.month() === today.month()
-        && day.year() === today.year() ? 'today day' : 'day'}>
+    if (day.date() === today.date() && day.month() === today.month()
+        && day.year() === today.year()) {
+            return <div className='today day'>
+                <div className='date'>{day.format('MMM D')}</div>
+                <div className='notes'>
+                    {getNotes(day).map((note, index) => (
+                        <p key={index}>{note}</p>
+                    ))}
+                </div>
+            </div>
+            }
+
+    return <div className='day'>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
             {getNotes(day).map((note, index) => (
