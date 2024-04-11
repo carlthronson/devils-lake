@@ -5,10 +5,10 @@ import Today from './Today.jsx';
 
 const birthdays = {
     'Apr 1': 'Kris',
-    'Apr 10': 'Me',
     'Mar 16': 'Kate',
     'Mar 24': 'Palm Sunday',
-    'Mar 31': 'Easter'
+    'Mar 31': 'Easter',
+    'Jul 16': 'Mark',
 }
 
 let getNotes = function (day) {

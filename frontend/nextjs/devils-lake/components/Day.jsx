@@ -7,7 +7,8 @@ const birthdays = {
     'Apr 1': 'Kris',
     'Mar 16': 'Kate',
     'Mar 24': 'Palm Sunday',
-    'Mar 31': 'Easter'
+    'Mar 31': 'Easter',
+    'Jul 16': 'Mark'
 }
 
 let getNotes = function (day) {
