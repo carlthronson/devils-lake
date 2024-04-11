@@ -15,15 +15,10 @@ let getNotes = function (day) {
 }
 
 export default function Day({ day, index }) {
-    const [isToday, setIsToday] = useState(false);
     const today = moment();
 
-    useEffect(() => {
-        setIsToday(day.date() === today.date() && day.month() === today.month()
-          && day.year() === today.year());
-    }, []);
-
-    return <div className={isToday ? 'today day' : 'day'}>
+    return <div className={day.date() === today.date() && day.month() === today.month()
+        && day.year() === today.year() ? 'today day' : 'day'}>
         <div className='date'>{day.format('MMM D')}</div>
         <div className='notes'>
             {getNotes(day).map((note, index) => (
