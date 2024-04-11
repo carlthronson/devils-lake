@@ -21,6 +21,6 @@ export default function Page() {
 
   return <div className='calendar-container'>
     <Header someMoment={someDay} prev={prev} next={next}></Header>
-    <Month someMoment={someDay}></Month>
+    <Month someMoment={someDay} today={today}></Month>
   </div>
 }

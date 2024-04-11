@@ -14,8 +14,7 @@ let getNotes = function (day) {
     return [birthdays[day.format('MMM D')]];
 }
 
-export default function Day({ day, index }) {
-    const today = moment();
+export default function Day({ day, today, index }) {
 
     return <div className={day.date() === today.date() && day.month() === today.month()
         && day.year() === today.year() ? 'today day' : 'day'}>

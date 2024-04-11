@@ -11,7 +11,7 @@ const getWeek = function (someDay) {
     return week;
 }
 
-export default function Month({ someMoment, index }) {
+export default function Month({ someMoment, today, index }) {
 
     let firstDay = someMoment.clone().startOf('month');
     let weeks = [];
@@ -27,7 +27,7 @@ export default function Month({ someMoment, index }) {
 
     return <div className='month-container'>
         {weeks.map((week, index) => (
-            <Week week={week} index={index} key={index}></Week>
+            <Week week={week} today={today} index={index} key={index}></Week>
         ))}
     </div>
 }
