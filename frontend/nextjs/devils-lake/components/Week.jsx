@@ -10,6 +10,7 @@ export default function Week({ week, today, index }) {
     for (const day of week) {
         let isToday = day.date() === today.date() && day.month() === today.month() && day.year() === today.year();
         if (isToday) {
+            console.log(`This day is today: ${day}`);
             days.push(<Today day={day} index={dayOfWeek} key={dayOfWeek}></Today>);
         } else {
             days.push(<Day day={day} index={dayOfWeek} key={dayOfWeek}></Day>);
