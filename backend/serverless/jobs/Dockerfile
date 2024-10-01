@@ -2,7 +2,7 @@
 FROM maven:3.8.2-openjdk-17 as build
 
 # Set the working directory in the container
-WORKDIR ./app
+WORKDIR /app
 
 # Copy the pom.xml file
 COPY pom.xml .
@@ -20,7 +20,7 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
-WORKDIR ./app
+WORKDIR /app
 
 # Copy the jar file from the build stage
 COPY --from=build ./app/target/*.jar app.jar
