@@ -18,18 +18,20 @@ export default function StoryBoard() {
     const statusurl = "/api/status/findall?limit=10";
     fetch(statusurl)
       .then((response) => response.json())
-      .then((json) => {
-        json.sort((a, b) => ((a.id > b.id) ? 1 : -1));
-        setStatuses(json);
+      .then((page) => {
+        console.log(JSON.stringify(page.content));
+        page.content.sort((a, b) => ((a.id > b.id) ? 1 : -1));
+        setStatuses(page.content);
         setIsLoadingStatuses(false);
       });
 
     const url = "/api/phase/findall?limit=10";
     fetch(url)
       .then((response) => response.json())
-      .then((json) => {
-        json.sort((a, b) => ((a.id > b.id) ? 1 : -1));
-        setPhases(json);
+      .then((page) => {
+        console.log(JSON.stringify(page.content));
+        page.content.sort((a, b) => ((a.id > b.id) ? 1 : -1));
+        setPhases(page.content);
         setIsLoadingPhases(false);
       });
   }, []);

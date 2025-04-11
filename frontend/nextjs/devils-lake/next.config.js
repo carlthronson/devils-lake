@@ -9,7 +9,9 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://devils-lake-backend.onrender.com/:path*' // Proxy to Backend
+        // destination: 'https://devils-lake-backend.onrender.com/:path*' // Proxy to Backend
+        // destination: 'http://localhost:8082/:path*'
+        destination: 'https://all-my-apps-backend-2025-04-09.onrender.com/:path*'
       }
     ]
   },
