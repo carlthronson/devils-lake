@@ -90,16 +90,18 @@ function bgcolorChange(props) {
   return 'lightgreen';
 }
 
-export default function Task({ task, story, statuses, index }) {
+export default function Task({ job, story, statuses, index }) {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
 
   const handleChange = (selectedOption) => {
     console.log('selected choice: ' + JSON.stringify(selectedOption));
-    task.status.name = selectedOption.value;
-    task['story'] = { id: story.id };
+    job.task.status.name = selectedOption.value;
+    job.task['story'] = { id: story.id };
+    let payload = JSON.stringify({id: job.task.id, status: job.task.status.name});
+    console.log("payload for posting to task api: " + payload);
     fetch('/api/task', {
       method: "POST",
-      body: JSON.stringify(task),
+      body: payload,
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -123,7 +125,7 @@ export default function Task({ task, story, statuses, index }) {
         justifyContent: 'space-between',
         gap: 8
       }}>
-        <Link style={{  }} href={task.job.linkedinurl} target='_blank'>{task.job.name}</Link>
+        <Link style={{  }} href={job.linkedinurl} target='_blank'>{job.name}</Link>
         {/* <p style={{float: 'right'}}>Right-aligned text</p> */}
         <Link style={{ flexShrink: 0 }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand'}</Link>
       </div>
@@ -133,7 +135,7 @@ export default function Task({ task, story, statuses, index }) {
             styles={customStyles}
             className="basic-single"
             classNamePrefix="select"
-            defaultValue={{ value: task.status.name, label: task.status.label }}
+            defaultValue={{ value: job.task.status.name, label: job.task.status.label }}
             isDisabled={isDisabled}
             isLoading={false}
             isClearable={false}
@@ -150,12 +152,12 @@ export default function Task({ task, story, statuses, index }) {
           />
         </div>
 
-        <Row>Location: {task.job.location || story.location}</Row>
-        <Row>Posted: {moment.utc(task.job.publishedAt).fromNow()}</Row>
-        <Row>Salary: {task.job.salary}</Row>
-        <Row>Contract type: {task.job.contracttype}</Row>
-        <Row>Experience Level: {task.job.experiencelevel}</Row>
-        <Row>Sector: {task.job.sector}</Row>
+        <Row>Location: {job.location || story.location}</Row>
+        <Row>Posted: {moment.utc(job.publishedAt).fromNow().replace(/^a day ago$/, 'Yesterday')}</Row>
+        <Row>Salary: {job.salary}</Row>
+        <Row>Contract type: {job.contracttype}</Row>
+        <Row>Experience Level: {job.experiencelevel}</Row>
+        <Row>Sector: {job.sector}</Row>
 
       </div>
     </TaskArea>

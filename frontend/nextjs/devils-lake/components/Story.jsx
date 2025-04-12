@@ -31,12 +31,12 @@ export default function Story({ story, statuses, index, total }) {
         justifyContent: 'space-between',
         gap: 8
       }}>
-      <span href='' style={{  }}>{index + 1}/{total} ({story.tasks.length}) {story.label} - {story.location}</span>
+      <span href='' style={{  }}>{index + 1}/{total} ({story.jobs.length}) {story.label} - {story.location}</span>
       <Link href='' style={{  }} {...getToggleProps()}>{isExpanded ? 'Collapse' : 'Expand'}</Link>
       </div>
       <section {...getCollapseProps()}>
-        {story.tasks.map((item, index) => (
-            <Task key={index} task={item} story={story} statuses={statuses} index={index} />
+        {story.jobs.map((item, index) => (
+            <Task key={index} job={item} story={story} statuses={statuses} index={index} />
         ))}
       </section>
     </StoryArea>

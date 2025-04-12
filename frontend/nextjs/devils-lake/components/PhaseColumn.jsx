@@ -37,11 +37,13 @@ export default function PhaseColumn({ statuses, phase, id }) {
         console.log("url: " + url);
         fetch(url)
             .then((response) => {
-                const json = response.json();
-                const body = response.body;
-                return json;
+                return response.json();
             })
             .then((data) => {
+                console.log("all companies: " + JSON.stringify(data));
+                // const body = response.body;
+                // console.log("what is this: " + body);
+                // return json;
                 setStories(data);
                 setIsLoading(false);
             });
